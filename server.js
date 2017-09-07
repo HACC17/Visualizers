@@ -32,7 +32,7 @@ application.use(function (request, response, next) {
 */
 
 application.get("/", function (request, response) {
-	response.sendFile(ROOT_DIRECTORY + "/file/index.html");
+	response.sendFile(ROOT_DIRECTORY + "/HACC-AP/index.html");
     
     //let path = request.path.substring("/file/".length);
 	//response.sendFile(ROOT_DIRECTORY + Path);

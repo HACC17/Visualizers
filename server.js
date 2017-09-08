@@ -41,3 +41,12 @@ application.get("/", function (request, response) {
 server.listen(listenPort, listenAddress, function () {
 	console.log("Listening on " + listenAddress + ":" + listenPort);
 });
+
+// Catch SIGTERM sent to process
+process.on("SIGTERM", function () {
+	// Stop accepting new connections, and finish serving already established connections
+	server.close(function () {
+		// Once all requests have been served, exit
+		process.exit(0);
+	});
+});

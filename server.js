@@ -12,6 +12,8 @@ let application = require("express")();
 let http = require("http");
 let server = http.createServer(application);
 let fs = require("fs");
+let util = require("util");
+let crypto = require("crypto");
 
 // Add headers
 /*
@@ -33,6 +35,55 @@ application.use(function (request, response, next) {
 	next();
 });
 */
+
+// Handle errors
+// Temporary catch-all
+application.use(function (mainError, request, response, next) {
+	// Return a 500 Internal Server Error
+	response.status(500);
+	
+	// 500.html contains a %s, where the error ID is intended to go
+	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "500.html", function (error, data) {
+		if (error) {
+			// Couldn't read the error file
+			console.error("Application error:");
+			console.error(mainError);
+			console.error("Error reading 500.html");
+			console.error(error);
+			
+			response.send("500 Internal Server Error")
+			
+			return;
+		}
+		
+		// Generate an error ID
+		crypto.randomBytes(25, function(error, buffer) {
+			if (error) {
+				// Couldn't generate an ID
+				console.error("Application error:");
+				console.error(mainError);
+				console.error("Error generating error ID");
+				console.error(error);
+				
+				// Format the string (500 error file) and send it
+				response.send(util.format(data, "Unable to generate reference ID"));
+				
+				return;
+			}
+			
+			let errorID = buffer.toString("base64").replace(/\//g, "_").replace(/\+/g, "-");
+			
+			console.error("Application error reference ID: " + errorID);
+			console.error(mainError);
+			
+			// Format the string (500 error file) and send it
+			response.send(util.format(data, errorID));
+		});
+	});
+	
+	// Don't call next() because we're done
+	return;
+});
 
 // Attempt to serve any file requested from the HACC-AP directory
 application.get("*", function (request, response) {

@@ -62,6 +62,11 @@ server.listen(listenPort, listenAddress, function () {
 
 // Catch SIGTERM sent to process
 process.on("SIGTERM", function () {
+	// If server.close doesn't close within 5 seconds, exit
+	setTimeout(function () {
+		process.exit(0);
+	}, 5000);
+	
 	// Stop accepting new connections, and finish serving already established connections
 	server.close(function () {
 		// Once all requests have been served, exit

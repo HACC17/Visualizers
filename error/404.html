@@ -20,40 +20,6 @@
 				text-decoration: none;
 			}
 		</style>
-		<script type="text/javascript">
-			function get(url, success, fail) {
-				var request = new XMLHttpRequest();
-				request.addEventListener("load", function (event) {
-					if (success) {
-						success.call(this, request.responseText, request);
-					}
-				}, false);
-				request.addEventListener("error", function (event) {
-					if (fail) {
-						fail.call(this, request.responseText, request);
-					}
-				}, false);
-				request.addEventListener("abort", function (event) {
-					if (fail) {
-						fail.call(this, request.responseText, request);
-					}
-				}, false);
-				request.open("GET", url, true);
-				// request.setRequestHeader("Cache-Control", "no-cache");
-				request.setRequestHeader("X-Requested-With", "XMLHttpRequest");
-				try {
-					request.send(null);
-				} catch (error) {}
-			};
-			
-			setInterval(function () {
-				get("http://192.168.200.100:8080/", function (text, request) {
-					if (request.status == 200) {
-						location.reload();
-					}
-				});
-			}, 5000);
-		</script>
 	</head>
 	<body>
 		<div style="padding: 20px; background: #E3F2FD; text-align: center;">

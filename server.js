@@ -2,6 +2,8 @@
 "use strict";
 
 let ROOT_DIRECTORY = __dirname + "/";
+let HTTP_DIRECTORY = "HACC-AP/";
+let ERROR_DIRECTORY = "error/";
 
 let listenAddress = "0.0.0.0";
 let listenPort = 8080;
@@ -9,6 +11,7 @@ let listenPort = 8080;
 let application = require("express")();
 let http = require("http");
 let server = http.createServer(application);
+let fs = require("fs");
 
 // Add headers
 /*
@@ -31,11 +34,26 @@ application.use(function (request, response, next) {
 });
 */
 
-application.get("/", function (request, response) {
-	response.sendFile(ROOT_DIRECTORY + "/HACC-AP/index.html");
+// Attempt to serve any file requested from the HACC-AP directory
+application.get("*", function (request, response) {
+	if (request == "/") {
+		response.sendFile(ROOT_DIRECTORY + HTTP_DIRECTORY + "index.html");
+	}
 	
-	//let path = request.path.substring("/file/".length);
-	//response.sendFile(ROOT_DIRECTORY + Path);
+	// Removes the leading slash
+	let path = request.path.substring("/".length);
+	
+	fs.access(ROOT_DIRECTORY + HTTP_DIRECTORY + path, fs.constants.R_OK, function (error) {
+		if (error) {
+			// Return a 404
+			response.status(404);
+			response.sendFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "404.html");
+			
+			return;
+		}
+		
+		response.sendFile(ROOT_DIRECTORY + HTTP_DIRECTORY + path)
+	});
 });
 
 server.listen(listenPort, listenAddress, function () {

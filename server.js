@@ -1,12 +1,12 @@
 //#!/bin/env node
 "use strict";
 
-let ROOT_DIRECTORY = __dirname + "/";
-let HTTP_DIRECTORY = "HACC-AP/";
-let ERROR_DIRECTORY = "error/";
+const ROOT_DIRECTORY = __dirname + "/";
+const HTTP_DIRECTORY = "HACC-AP/";
+const ERROR_DIRECTORY = "error/";
 
-let listenAddress = "0.0.0.0";
-let listenPort = 8080;
+const LISTEN_ADDRESS = "0.0.0.0";
+const LISTEN_PORT = 8080;
 
 let application = require("express")();
 let http = require("http");
@@ -56,8 +56,8 @@ application.get("*", function (request, response) {
 	});
 });
 
-server.listen(listenPort, listenAddress, function () {
-	console.log("Listening on " + listenAddress + ":" + listenPort);
+server.listen(LISTEN_PORT, LISTEN_ADDRESS, function () {
+	console.log("Listening on " + LISTEN_ADDRESS + ":" + LISTEN_PORT);
 });
 
 // Catch SIGTERM sent to process

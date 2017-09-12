@@ -36,14 +36,143 @@ application.use(function (request, response, next) {
 });
 */
 
-// Handle errors
+// TODO: Consolidate duplicate error handling code into reusable functions
+
+// Attempt to serve any file requested from the HACC-AP directory
+application.use(function (request, response, next) {
+	// Handle only GET requests
+	if (request.method != "GET") {
+		// Pass the request down the chain
+		next();
+		
+		return;
+	}
+	
+	// Removes the leading slash
+	let path = request.path.substring("/".length);
+	
+	if (request.path.charAt(request.path.length - 1) == "/") {
+		// Try to serve an index.html if the request is for a directory
+		path += "index.html";
+	}
+	
+	fs.access(ROOT_DIRECTORY + HTTP_DIRECTORY + path, fs.constants.R_OK, function (error) {
+		if (error) {
+			let error = new Error("404 Not Found");
+			error.status = 404;
+			
+			// Trigger the error handler chain
+			next(error);
+			
+			return;
+		}
+		
+		response.sendFile(ROOT_DIRECTORY + HTTP_DIRECTORY + path)
+	});
+});
+
+// Catch 405 errors
+application.use(function (request, response, next) {
+	// Temporarily filter for GET and POST requests
+	if (request.method == "GET" || request.method == "POST") {
+		// Pass the request down the chain
+		next();
+		
+		return;
+	}
+	
+	let error = new Error("405 Method Not Allowed");
+	error.status = 405;
+	
+	// Trigger the error handler chain
+	next(error);
+});
+
+// Catch 500 errors (catch-all)
+application.use(function (request, response, next) {
+	let error = new Error("500 Internal Server Error");
+	error.status = 500;
+	
+	// Trigger the error handler chain
+	next(error);
+});
+
+// Handle 404 errors
+application.use(function (mainError, request, response, next) {
+	if (mainError.status != 404) {
+		// Pass the error down the chain
+		next(mainError);
+		
+		return;
+	}
+	
+	// Return a 404 Not Found
+	response.status(404);
+	response.sendFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "404.html");
+});
+
+// Handle 405 errors
+application.use(function (mainError, request, response, next) {
+	if (mainError.status != 405) {
+		// Pass the error down the chain
+		next(mainError);
+		
+		return;
+	}
+	// Return a 405 Method Not Allowed
+	response.status(405);
+	
+	// 405.html contains three %s, where the method, request URL, and error ID is intended to go
+	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "405.html", "utf-8", function (error, data) {
+		if (error) {
+			// Couldn't read the error file
+			console.error("Application error:");
+			console.error(mainError);
+			console.error("Error reading 405.html");
+			console.error(error);
+			
+			response.send("405 Method Not Allowed")
+			
+			return;
+		}
+		
+		// Generate an error ID
+		crypto.randomBytes(25, function(error, buffer) {
+			if (error) {
+				// Couldn't generate an ID
+				console.error("Application error:");
+				console.error(mainError);
+				console.error("Error generating error ID");
+				console.error(error);
+				
+				// Format the string (405 error file) and send it
+				response.send(util.format(data, request.method, request.path, "Unable to generate reference ID"));
+				
+				return;
+			}
+			
+			let errorID = buffer.toString("base64").replace(/\//g, "_").replace(/\+/g, "-");
+			
+			console.error("Application error reference ID: " + errorID);
+			console.error(mainError);
+			
+			// Format the string (405 error file) and send it
+			response.send(util.format(data, request.method, request.path, errorID));
+		});
+	});
+	
+	// Don't call next() because we're done
+	return;
+});
+
+// Handle 500 errors
 // Temporary catch-all
 application.use(function (mainError, request, response, next) {
 	// Return a 500 Internal Server Error
 	response.status(500);
 	
 	// 500.html contains a %s, where the error ID is intended to go
-	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "500.html", function (error, data) {
+	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "500.html", "utf-8", function (error, data) {
 		if (error) {
 			// Couldn't read the error file
 			console.error("Application error:");
@@ -83,28 +212,6 @@ application.use(function (mainError, request, response, next) {
 	
 	// Don't call next() because we're done
 	return;
-});
-
-// Attempt to serve any file requested from the HACC-AP directory
-application.get("*", function (request, response) {
-	if (request == "/") {
-		response.sendFile(ROOT_DIRECTORY + HTTP_DIRECTORY + "index.html");
-	}
-	
-	// Removes the leading slash
-	let path = request.path.substring("/".length);
-	
-	fs.access(ROOT_DIRECTORY + HTTP_DIRECTORY + path, fs.constants.R_OK, function (error) {
-		if (error) {
-			// Return a 404
-			response.status(404);
-			response.sendFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "404.html");
-			
-			return;
-		}
-		
-		response.sendFile(ROOT_DIRECTORY + HTTP_DIRECTORY + path)
-	});
 });
 
 server.listen(LISTEN_PORT, LISTEN_ADDRESS, function () {

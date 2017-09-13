@@ -1,13 +1,39 @@
 <html>
-	<head>
-		<title>HACC Visualization Team</title>
-	</head>
-	<body>
-		<span style="font-size: 132px;">Aloha+ Data Visualization</span>
-		<br><br>
-		<img src="https://i.ytimg.com/vi/6MyjFHd04R8/maxresdefault.jpg">
-                TEAM CAPTAIN: Alice Chen;<br>
-                Backend Team: Alice Chen, Sae Hyun Song, Ethan Chow;<br>
-                Frontend Team: David Wang, Sharie Anne Mamuad, Eddie Wen, Tetsuya Idota;<br>
-	</body>
+    <head>
+        <title>HACC Visualization Team</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+        <span style="font-size: 132px;white-space:nowrap" id="title">Aloha+ Data Visualization</span>
+        <br><br>
+
+        <table>
+            <tr>
+                <td width="100%" id="img">
+                    <img src="https://i.ytimg.com/vi/6MyjFHd04R8/maxresdefault.jpg" width="100%">
+                </td>
+                <td id="members" style="color:white">
+                    <p> 
+                        TEAM CAPTAIN: Alice Chen;<br>
+                        Backend Team: Alice Chen, Sae Hyun Song, Ethan Chow;<br>
+                        Frontend Team: David Wang, Sharie Anne Mamuad, Eddie Wen, Tetsuya Idota;<br>
+                    </p> 
+                </td>
+            </tr>
+        </table>
+
+    </body>
 </html>
+
+<script>
+// shrinking title
+d3.selectAll("#title").transition().duration(1000)
+    .style("font-size","50px");
+// shrinking image
+d3.selectAll("#img").transition().duration(1000)
+    .attr("width" , "50%");
+// appearing text
+d3.selectAll("#members").transition().duration(1300)
+     .delay(1000)
+     .style("color","green");
+</script>

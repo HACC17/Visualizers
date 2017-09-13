@@ -39,7 +39,7 @@ application.use(function (request, response, next) {
 // TODO: Consolidate duplicate error handling code into reusable functions
 
 // Attempt to serve any file requested from the HACC-AP directory
-application.use(function (request, response, next) {
+application.use((request, response, next) => {
 	// Handle only GET requests
 	if (request.method != "GET") {
 		// Pass the request down the chain
@@ -56,7 +56,7 @@ application.use(function (request, response, next) {
 		path += "index.html";
 	}
 	
-	fs.access(ROOT_DIRECTORY + HTTP_DIRECTORY + path, fs.constants.R_OK, function (error) {
+	fs.access(ROOT_DIRECTORY + HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
 		if (error) {
 			let error = new Error("404 Not Found");
 			error.status = 404;
@@ -72,7 +72,7 @@ application.use(function (request, response, next) {
 });
 
 // Catch 405 errors
-application.use(function (request, response, next) {
+application.use((request, response, next) => {
 	// Temporarily filter for GET and POST requests
 	if (request.method == "GET" || request.method == "POST") {
 		// Pass the request down the chain
@@ -89,7 +89,7 @@ application.use(function (request, response, next) {
 });
 
 // Catch 500 errors (catch-all)
-application.use(function (request, response, next) {
+application.use((request, response, next) => {
 	let error = new Error("500 Internal Server Error");
 	error.status = 500;
 	
@@ -98,7 +98,7 @@ application.use(function (request, response, next) {
 });
 
 // Handle 404 errors
-application.use(function (mainError, request, response, next) {
+application.use((mainError, request, response, next) => {
 	if (mainError.status != 404) {
 		// Pass the error down the chain
 		next(mainError);
@@ -112,7 +112,7 @@ application.use(function (mainError, request, response, next) {
 });
 
 // Handle 405 errors
-application.use(function (mainError, request, response, next) {
+application.use((mainError, request, response, next) => {
 	if (mainError.status != 405) {
 		// Pass the error down the chain
 		next(mainError);
@@ -123,7 +123,7 @@ application.use(function (mainError, request, response, next) {
 	response.status(405);
 	
 	// 405.html contains three %s, where the method, request URL, and error ID is intended to go
-	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "405.html", "utf-8", function (error, data) {
+	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "405.html", "utf-8", (error, data) => {
 		if (error) {
 			// Couldn't read the error file
 			console.error("Application error:");
@@ -137,7 +137,7 @@ application.use(function (mainError, request, response, next) {
 		}
 		
 		// Generate an error ID
-		crypto.randomBytes(25, function(error, buffer) {
+		crypto.randomBytes(25, (error, buffer) => {
 			if (error) {
 				// Couldn't generate an ID
 				console.error("Application error:");
@@ -167,12 +167,12 @@ application.use(function (mainError, request, response, next) {
 
 // Handle 500 errors
 // Temporary catch-all
-application.use(function (mainError, request, response, next) {
+application.use((mainError, request, response, next) => {
 	// Return a 500 Internal Server Error
 	response.status(500);
 	
 	// 500.html contains a %s, where the error ID is intended to go
-	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "500.html", "utf-8", function (error, data) {
+	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "500.html", "utf-8", (error, data) => {
 		if (error) {
 			// Couldn't read the error file
 			console.error("Application error:");
@@ -186,7 +186,7 @@ application.use(function (mainError, request, response, next) {
 		}
 		
 		// Generate an error ID
-		crypto.randomBytes(25, function(error, buffer) {
+		crypto.randomBytes(25, (error, buffer) => {
 			if (error) {
 				// Couldn't generate an ID
 				console.error("Application error:");
@@ -214,19 +214,19 @@ application.use(function (mainError, request, response, next) {
 	return;
 });
 
-server.listen(LISTEN_PORT, LISTEN_ADDRESS, function () {
+server.listen(LISTEN_PORT, LISTEN_ADDRESS, () => {
 	console.log("Listening on " + LISTEN_ADDRESS + ":" + LISTEN_PORT);
 });
 
 // Catch SIGTERM sent to process
-process.on("SIGTERM", function () {
+process.on("SIGTERM", () => {
 	// If server.close doesn't close within 5 seconds, exit
-	setTimeout(function () {
+	setTimeout(() => {
 		process.exit(0);
 	}, 5000);
 	
 	// Stop accepting new connections, and finish serving already established connections
-	server.close(function () {
+	server.close(() => {
 		// Once all requests have been served, exit
 		process.exit(0);
 	});

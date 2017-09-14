@@ -2,9 +2,12 @@
 "use strict";
 
 const ROOT_DIRECTORY = __dirname + "/";
-const HTTP_DIRECTORY = "HACC-AP/";
-const ERROR_DIRECTORY = "error/";
+const HTTP_DIRECTORY = ROOT_DIRECTORY + "HACC-AP/";
+const ERROR_DIRECTORY = ROOT_DIRECTORY + "error/";
+const INCLUDE_DIRECTORY = ROOT_DIRECTORY + "include/";
+const TEMPLATE_DIRECTORY = ROOT_DIRECTORY + "template/";
 
+const ALLOWED_METHODS = ["GET", "POST"];
 const LISTEN_ADDRESS = "0.0.0.0";
 const LISTEN_PORT = 8080;
 
@@ -12,8 +15,10 @@ let application = require("express")();
 let http = require("http");
 let server = http.createServer(application);
 let fs = require("fs");
-let util = require("util");
-let crypto = require("crypto");
+
+let ServerError = require(INCLUDE_DIRECTORY + "serverErrors");
+let template = require(INCLUDE_DIRECTORY + "template");
+let utilities = require(INCLUDE_DIRECTORY + "utilities");
 
 // Add headers
 /*
@@ -36,8 +41,6 @@ application.use(function (request, response, next) {
 });
 */
 
-// TODO: Consolidate duplicate error handling code into reusable functions
-
 // Attempt to serve any file requested from the HACC-AP directory
 application.use((request, response, next) => {
 	// Handle only GET requests
@@ -56,10 +59,13 @@ application.use((request, response, next) => {
 		path += "index.html";
 	}
 	
-	fs.access(ROOT_DIRECTORY + HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
+	fs.access(HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
 		if (error) {
 			let error = new Error("404 Not Found");
 			error.status = 404;
+			error._method = request.method;
+			error._originalPath = request.path;
+			error._impliedPath = path;
 			
 			// Trigger the error handler chain
 			next(error);
@@ -67,14 +73,28 @@ application.use((request, response, next) => {
 			return;
 		}
 		
-		response.sendFile(ROOT_DIRECTORY + HTTP_DIRECTORY + path)
+		response.sendFile(HTTP_DIRECTORY + path)
 	});
 });
 
-// Catch 405 errors
 application.use((request, response, next) => {
-	// Temporarily filter for GET and POST requests
-	if (request.method == "GET" || request.method == "POST") {
+	// Handle only POST requests
+	if (request.method != "POST") {
+		// Pass the request down the chain
+		next();
+		
+		return;
+	}
+	
+	response.setHeader("Content-Type", "text/plain");
+	response.send("POST request received!");
+});
+
+// Catch 405 errors
+// Supported methods are in ALLOWED_METHODS
+application.use((request, response, next) => {
+	// Filter for methods
+	if (request.method in ALLOWED_METHODS) {
 		// Pass the request down the chain
 		next();
 		
@@ -83,6 +103,8 @@ application.use((request, response, next) => {
 	
 	let error = new Error("405 Method Not Allowed");
 	error.status = 405;
+	error._method = request.method;
+	error._originalPath = request.path;
 	
 	// Trigger the error handler chain
 	next(error);
@@ -92,126 +114,76 @@ application.use((request, response, next) => {
 application.use((request, response, next) => {
 	let error = new Error("500 Internal Server Error");
 	error.status = 500;
+	error._method = request.method;
+	error._originalPath = request.path;
 	
 	// Trigger the error handler chain
 	next(error);
 });
 
-// Handle 404 errors
+// Handle errors
 application.use((mainError, request, response, next) => {
-	if (mainError.status != 404) {
-		// Pass the error down the chain
-		next(mainError);
-		
-		return;
-	}
+	// If there is a specific error object for the given error, use it. Otherwise, use 500
+	// Internal Server Error
+	let errorType = mainError.status in ServerError ? ServerError[mainError.status] : ServerError[500];
 	
-	// Return a 404 Not Found
-	response.status(404);
-	response.sendFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "404.html");
-});
-
-// Handle 405 errors
-application.use((mainError, request, response, next) => {
-	if (mainError.status != 405) {
-		// Pass the error down the chain
-		next(mainError);
-		
-		return;
-	}
-	// Return a 405 Method Not Allowed
-	response.status(405);
+	// Return a return the correct status code header
+	response.status(errorType.code);
 	
-	// 405.html contains three %s, where the method, request URL, and error ID is intended to go
-	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "405.html", "utf-8", (error, data) => {
+	utilities.randomString(25, (error, errorID) => {
 		if (error) {
-			// Couldn't read the error file
-			console.error("Application error:");
+			// Couldn't generate an ID
+			console.error("Application error reference ID: " + errorID);
 			console.error(mainError);
-			console.error("Error reading 405.html");
+			console.error("Error generating error ID:");
 			console.error(error);
 			
-			response.send("405 Method Not Allowed")
+			// Send a plain text error
+			response.setHeader("Content-Type", "text/plain");
+			response.send(errorType.code + " " + errorType.name);
 			
 			return;
 		}
 		
-		// Generate an error ID
-		crypto.randomBytes(25, (error, buffer) => {
+		template.parseFile(TEMPLATE_DIRECTORY + "error", {
+			errorCode: errorType.code,
+			errorName: errorType.name,
+			errorMessage: errorType.message,
+			errorInformation: () => {
+				if (typeof errorType.information == "function") {
+					return errorType.information(request.method, request.path);
+				}
+				
+				return errorType.information;
+			},
+			errorHelpText: () => {
+				if (typeof errorType.helpText == "function") {
+					return errorType.helpText(errorID);
+				}
+				
+				return errorType.helpText;
+			}
+		}, (error, data) => {
 			if (error) {
-				// Couldn't generate an ID
-				console.error("Application error:");
+				// Couldn't read or parse the error template
+				console.error("Application error reference ID: " + errorID);
 				console.error(mainError);
-				console.error("Error generating error ID");
+				console.error("Error getting template:");
 				console.error(error);
 				
-				// Format the string (405 error file) and send it
-				response.send(util.format(data, request.method, request.path, "Unable to generate reference ID"));
+				// Send a plain text error
+				response.setHeader("Content-Type", "text/plain");
+				response.send(errorType.code + " " + errorType.name + "\nError Reference ID: " + errorID);
 				
 				return;
 			}
 			
-			let errorID = buffer.toString("base64").replace(/\//g, "_").replace(/\+/g, "-");
-			
 			console.error("Application error reference ID: " + errorID);
 			console.error(mainError);
 			
-			// Format the string (405 error file) and send it
-			response.send(util.format(data, request.method, request.path, errorID));
+			response.send(data);
 		});
 	});
-	
-	// Don't call next() because we're done
-	return;
-});
-
-// Handle 500 errors
-// Temporary catch-all
-application.use((mainError, request, response, next) => {
-	// Return a 500 Internal Server Error
-	response.status(500);
-	
-	// 500.html contains a %s, where the error ID is intended to go
-	fs.readFile(ROOT_DIRECTORY + ERROR_DIRECTORY + "500.html", "utf-8", (error, data) => {
-		if (error) {
-			// Couldn't read the error file
-			console.error("Application error:");
-			console.error(mainError);
-			console.error("Error reading 500.html");
-			console.error(error);
-			
-			response.send("500 Internal Server Error")
-			
-			return;
-		}
-		
-		// Generate an error ID
-		crypto.randomBytes(25, (error, buffer) => {
-			if (error) {
-				// Couldn't generate an ID
-				console.error("Application error:");
-				console.error(mainError);
-				console.error("Error generating error ID");
-				console.error(error);
-				
-				// Format the string (500 error file) and send it
-				response.send(util.format(data, "Unable to generate reference ID"));
-				
-				return;
-			}
-			
-			let errorID = buffer.toString("base64").replace(/\//g, "_").replace(/\+/g, "-");
-			
-			console.error("Application error reference ID: " + errorID);
-			console.error(mainError);
-			
-			// Format the string (500 error file) and send it
-			response.send(util.format(data, errorID));
-		});
-	});
-	
-	// Don't call next() because we're done
-	return;
 });
 
 server.listen(LISTEN_PORT, LISTEN_ADDRESS, () => {

@@ -3,7 +3,6 @@
 
 const ROOT_DIRECTORY = __dirname + "/";
 const HTTP_DIRECTORY = ROOT_DIRECTORY + "HACC-AP/";
-const ERROR_DIRECTORY = ROOT_DIRECTORY + "error/";
 const INCLUDE_DIRECTORY = ROOT_DIRECTORY + "include/";
 const TEMPLATE_DIRECTORY = ROOT_DIRECTORY + "template/";
 

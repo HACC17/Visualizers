@@ -12,12 +12,18 @@
                 <td width="100%" id="img">
                     <img src="https://i.ytimg.com/vi/6MyjFHd04R8/maxresdefault.jpg" width="100%">
                 </td>
-                <td id="members" style="color:white">
-                    <p> 
-                        TEAM CAPTAIN: Alice Chen;<br>
-                        Backend Team: Alice Chen, Sae Hyun Song, Ethan Chow;<br>
-                        Frontend Team: David Wang, Sharie Anne Mamuad, Eddie Wen, Tetsuya Idota;<br>
-                    </p> 
+                <td id="members">
+                    <svg width="0" height="200" id="graph">
+                        <text x="200" y="50" id="t_capt" fill="white">TEAM CAPTAIN: Alice Chen;</text>
+                        <text x="200" y="50" id="t_back" fill="white">Backend Team: Alice Chen, Sae Hyun Song, Ethan Chow;</text>
+                        <text x="200" y="50" id="t_frnt" fill="white">Frontend Team: David Wang, Sharie Anne Mamuad, Eddie Wen, Tetsuya Idota;</text>
+                        <line x1="200" y1="50" x2="200" y2="50" id="l_capt" stroke="white" stroke-width="2"></line>
+                        <line x1="200" y1="50" x2="200" y2="50" id="l_back" stroke="white" stroke-width="2"></line>
+                        <line x1="200" y1="50" x2="200" y2="50" id="l_frnt" stroke="white" stroke-width="2"></line>
+                        <circle cx="200" cy="50" r="10" id="c_capt" fill="white"></circle>
+                        <circle cx="200" cy="50" r="10" id="c_back" fill="white"></circle>
+                        <circle cx="200" cy="50" r="10" id="c_frnt" fill="white"></circle>
+                    </svg>
                 </td>
             </tr>
         </table>
@@ -26,14 +32,69 @@
 </html>
 
 <script>
+// steps
+var t_shrink = 700;
+var t_appear = 400;
+var t_move = 800;
+
+// locations of graphs
+var x1 = 45;
+var y1 = 50;
+var x2 = 115;
+var y2 = 110;
+var x3 = 30;
+var y3 = 150;
+var x_off = 20;
+var y_off = 5;
+
 // shrinking title
-d3.selectAll("#title").transition().duration(1000)
+d3.selectAll("#title").transition().duration(t_shrink)
     .style("font-size","50px");
 // shrinking image
-d3.selectAll("#img").transition().duration(1000)
+d3.selectAll("#img").transition().duration(t_shrink)
     .attr("width" , "50%");
-// appearing text
-d3.selectAll("#members").transition().duration(1300)
-     .delay(1000)
-     .style("color","green");
+
+// showing the canvas
+d3.selectAll("#graph").transition().duration(t_shrink)
+     .attr("width","700");
+
+// moving graph and texts
+d3.select("#c_capt")
+    .transition().delay(t_shrink)
+    .transition().duration(t_appear).attr("fill","lime")
+    .transition().duration(t_move).attr("cx",String(x1)).attr("cy",String(y1));
+d3.select("#l_capt")
+    .transition().delay(t_shrink)
+    .transition().duration(t_appear).attr("stroke","cyan")
+    .transition().duration(t_move).attr("x1",String(x1)).attr("y1",String(y1)).attr("x2",String(x2)).attr("y2",String(y2));
+d3.select("#t_capt").attr("x",String(x1+x_off)).attr("y",String(y1+y_off))
+    .transition().delay(t_shrink)
+    .transition().delay(t_move)
+    .transition().duration(t_appear).attr("fill","green");
+
+d3.select("#c_back")
+    .transition().delay(t_shrink)
+    .transition().duration(t_appear).attr("fill","lime")
+    .transition().duration(t_move).attr("cx",String(x2)).attr("cy",String(y2));
+d3.select("#l_back")
+    .transition().delay(t_shrink)
+    .transition().duration(t_appear).attr("stroke","cyan")
+    .transition().duration(t_move).attr("x1",String(x2)).attr("y1",String(y2)).attr("x2",String(x3)).attr("y2",String(y3));
+d3.select("#t_back").attr("x",String(x2+x_off)).attr("y",String(y2+y_off))
+    .transition().delay(t_shrink)
+    .transition().delay(t_move)
+    .transition().duration(t_appear).attr("fill","green");
+
+d3.select("#c_frnt")
+    .transition().delay(t_shrink)
+    .transition().duration(t_appear).attr("fill","lime")
+    .transition().duration(t_move).attr("cx",String(x3)).attr("cy",String(y3));
+d3.select("#l_frnt")
+    .transition().delay(t_shrink)
+    .transition().duration(t_appear).attr("stroke","cyan")
+    .transition().duration(t_move).attr("x1",String(x3)).attr("y1",String(y3)).attr("x2",String(x1)).attr("y2",String(y1));
+d3.select("#t_frnt").attr("x",String(x3+x_off)).attr("y",String(y3+y_off))
+    .transition().delay(t_shrink)
+    .transition().delay(t_move)
+    .transition().duration(t_appear).attr("fill","green");
 </script>

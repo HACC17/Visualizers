@@ -9,10 +9,11 @@ let projectIdMapping = {
 module.exports = {
 	get: (key, callback) => {
             if (key in projectIdMapping) {
-                callback(undefined, projectIdMapping[key]);
+                utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key] + ".json", {protocol: "https:"}, undefined, (data) => {
+                callback(undefined, data)}, (error) => {callback(error)});
             }
             else {
-                callback(new Error());
+                callback(new Error("INVAID ETHAN"));
             } 
 	}
         //return contents of key or json files. 

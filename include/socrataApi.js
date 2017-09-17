@@ -8,7 +8,12 @@ let projectIdMapping = {
 
 module.exports = {
 	get: (key, callback) => {
-		// return content of https://dashboard.hawaii.gov/resource/{KEY_HERE}.json
-		
+            if (key in projectIdMapping) {
+                return projectIdMapping[key];
+            }
+            else {
+                return false;
+            } 
 	}
+        //return contents of key or json files. 
 };

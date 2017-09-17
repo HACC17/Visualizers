@@ -81,6 +81,7 @@ application.use((request, response, next) => {
 					// Send a 301 Moved Permanently
 					response.status(301);
 					response.setHeader("Location", path.substring(0, path.length - ".html".length));
+					response.send("");
 				} else {
 					// Send the file
 					response.sendFile(HTTP_DIRECTORY + path)

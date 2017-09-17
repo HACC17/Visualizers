@@ -33,16 +33,22 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Over View<span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/">Over View<span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Settings</a>
+            <a class="nav-link" href="/analytics.html">Analytics</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Profile</a>
+            <a class="nav-link" href="/dataUpload-energy.html">Upload Energy</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Help</a>
+            <a class="nav-link" href="/dataUpload-waste.html">Upload Waste</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataUpload-food.html">Upload Food</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/dataUpload-nature.html">Upload Nature</a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -264,7 +270,7 @@ function go2energy(){
   };
   data2 = {
     name : "Data2",
-    clr : "violet",
+    clr : "slateblue",
     list :  [23,30,20]
   };
   data3 = {
@@ -327,17 +333,17 @@ function go2nature(){
   canv.selectAll("*").remove();
 
   var items = [
-    "item1","item2","item3","item4","item5","item6"
+    "item1","item2","item3","item4","item5","item6","item7","item8"
   ];
   var data1 = {
     name : "Data1",
     clr : "blue",
-    list :  [50,30,20,10,56,26]
+    list :  [50,30,20,10,56,10,5,70]
   };
   var data2 = {
     name : "Data2",
     clr : "green",
-    list :  [45,50,43,55,20,30]
+    list :  [45,50,43,55,20,30,20,60]
   };
   var data = [data1,data2];
   mkchart(canv,items,data,"Nature",300,300,200,{back:"cyan",line:"green",text:"green"});

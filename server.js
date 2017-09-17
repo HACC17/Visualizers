@@ -58,16 +58,27 @@ application.use((request, response, next) => {
 		path += "index.html";
 	}
 	
+	// Look for the explicit file
 	fs.access(HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
 		if (error) {
-			let error = new Error("404 Not Found");
-			error.status = 404;
-			error._method = request.method;
-			error._originalPath = request.path;
-			error._impliedPath = path;
-			
-			// Trigger the error handler chain
-			next(error);
+			// Look for a file with the same path but with the .html extension appended
+			// This allows /test to point to /test.html
+			fs.access(HTTP_DIRECTORY + path + ".html", fs.constants.R_OK, (error) => {
+				if (error) {
+					let error = new Error("404 Not Found");
+					error.status = 404;
+					error._method = request.method;
+					error._originalPath = request.path;
+					error._impliedPath = path;
+
+					// Trigger the error handler chain
+					next(error);
+
+					return;
+				}
+
+				response.sendFile(HTTP_DIRECTORY + path + ".html")
+			});
 			
 			return;
 		}

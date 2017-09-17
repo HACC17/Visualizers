@@ -58,12 +58,12 @@ application.use((request, response, next) => {
 		path += "index.html";
 	}
 	
-	// Look for the explicit file
-	fs.access(HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
+	// Look for a file with the same path but with the .html extension appended
+	// This allows /test to point to /test.html
+	fs.access(HTTP_DIRECTORY + path + ".html", fs.constants.R_OK, (error) => {
 		if (error) {
-			// Look for a file with the same path but with the .html extension appended
-			// This allows /test to point to /test.html
-			fs.access(HTTP_DIRECTORY + path + ".html", fs.constants.R_OK, (error) => {
+			// Look for the explicit file
+			fs.access(HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
 				if (error) {
 					let error = new Error("404 Not Found");
 					error.status = 404;
@@ -73,17 +73,24 @@ application.use((request, response, next) => {
 
 					// Trigger the error handler chain
 					next(error);
-
+					
 					return;
 				}
-
-				response.sendFile(HTTP_DIRECTORY + path + ".html")
+				
+				if (path.substr(path.length - ".html".length) == ".html") {
+					// Send a 301 Moved Permanently
+					response.status(301);
+					response.setHeader("Location", path.substring(0, path.length - ".html".length));
+				} else {
+					// Send the file
+					response.sendFile(HTTP_DIRECTORY + path)
+				}
 			});
 			
 			return;
 		}
 		
-		response.sendFile(HTTP_DIRECTORY + path)
+		response.sendFile(HTTP_DIRECTORY + path + ".html")
 	});
 });
 

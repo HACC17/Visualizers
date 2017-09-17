@@ -1,57 +1,143 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="main page" content="">
-    <meta name="" content="">
-    <!-- <link rel="icon" href="../../../../favicon.ico"> -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
 
-    <title>HACC Visualization Team</title>
+  <title>Aloha+ Data Visualization</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
 
-    <!-- Custom styles for this template -->
-    <link href="dashboard.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
 
-    <!-- d3 -->
-    <script src="https://d3js.org/d3.v4.min.js"></script>
+  <link href="dashboard.css" rel="stylesheet">
 
-    <!-- jQuery -->
-    <script src="//code.jquery.com/jquery.min.js"></script>
-    <script>
-      $.get("/menu/navbar.html", function(data){ $("#navbar").replaceWith(data); });
-      $.get("/menu/sidebar.html", function(data){ $("#sidebar").replaceWith(data); });
-      $.get("/intro.html", function(data){ $("#main").replaceWith(data); });
-    </script>
+  <script src="http://d3js.org/d3.v3.min.js" language="JavaScript"></script>
+  <script src="liquidFillGauge.js" language="JavaScript"></script>
+  <style>
+  .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
+  </style>
   </head>
 
   <body>
-    <!-- navigation bar -->
-    <div id="navbar"></div>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="#">Dashboard</a>
+      <button class="navbar-toggler d-lg-none" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Settings</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Profile</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Help</a>
+          </li>
+        </ul>
+        <form class="form-inline mt-2 mt-md-0">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+      </div>
+    </nav>
 
     <div class="container-fluid">
       <div class="row">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Aloha+Energy <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Aloha+Waste</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Aloha+Food</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Aloha+Nature</a>
+            </li>
+          </ul>
+        </nav>
 
-        <!-- side bar -->
-        <div id="sidebar"></div>
-
-        <!-- main screen -->
-        <div id="main"></div>
-
+        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+          <h1>Dashboard</h1>
+  <p id="debug">debug</p>
+          <svg id="canvas" width="1000" height="1000">
+          </svg>
+        </main>
       </div>
     </div>
 
-    </div>
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="../../../../assets/js/vendor/popper.min.js"></script>
-    <script src="../../../../dist/js/bootstrap.min.js"></script>
   </body>
 </html>
 
+<script>
+
+var data = [50,30,20,10,56, 16];
+// var labels = ["","",""];
+
+var canv = d3.select("#canvas");
+
+// start
+var t_line_grow = 500;
+var t_poly_grow = 500;
+
+var orig_cx = 200;
+var orig_cy = 200;
+var radius = 150;
+var num = data.length;
+var max_val = Math.max.apply(null,data);
+
+var lines = canv.selectAll("line").data(data).enter().append("line");
+var polygons = canv.selectAll("polygon").data(["back", "data"])
+    .enter().append("polygon").attr("id",function(d){ return d; });
+var back = canv.select("#back");
+var poly = canv.select("#data");
+
+//initialize background polygon
+back.attr("points",""+orig_cx+","+orig_cy).attr("opacity","0.3").attr("fill","gray")
+  .attr("points",
+    function() {
+      return data.map(function(d,i) {
+        return [
+          radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
+          radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
+        ].join(",");
+      }).join(" ");
+    });
+//initialize lines
+lines
+  .attr("stroke","black").attr("stroke-width","2")
+  .attr("x1",orig_cx).attr("y1",orig_cy)
+  .attr("x2",orig_cx).attr("y2",orig_cy);
+//extend the lines
+lines.transition().duration(t_line_grow)
+  .attr("x2",function(d,i){ return radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
+  .attr("y2",function(d,i){ return radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; });
+//extend the polygon
+poly.attr("points",""+orig_cx+","+orig_cy).attr("opacity","0.4").attr("fill","green").transition().delay(t_line_grow).duration(t_poly_grow)
+  .attr("points",
+    function() {
+      return data.map(function(d,i) {
+        return [
+          radius*d/max_val*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
+          radius*d/max_val*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
+        ].join(",");
+      }).join(" ");
+    });
+
+
+
+</script>

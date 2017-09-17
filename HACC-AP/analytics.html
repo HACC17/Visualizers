@@ -73,32 +73,22 @@
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
           <h1>Dashboard</h1>
-				<svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
+				<svg id="fillgauge1" visibility="hidden" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
 				<svg id="fillgauge2" width="19%" height="200" onclick="gauge2.update(NewValue());"></svg>
-		i8		<!-- <svg id="fillgauge3" width="19%" height="200" onclick="gauge3.update(NewValue());"></svg> -->
+				<!-- <svg id="fillgauge3" width="19%" height="200" onclick="gauge3.update(NewValue());"></svg> -->
 				<!-- <svg id="fillgauge4" width="19%" height="200" onclick="gauge4.update(NewValue());"></svg> -->
 				<!-- <svg id="fillgauge5" width="19%" height="200" onclick="gauge5.update(NewValue());"></svg> -->
 				<!-- <svg id="fillgauge6" width="19%" height="200" onclick="gauge6.update(NewValue());"></svg> -->
 				<script language="JavaScript">
 					var gauge1 = loadLiquidFillGauge("fillgauge1", 55);
 					var config1 = liquidFillGaugeDefaultSettings();
-					config1.circleColor = "#D4AB6A";
-					config1.textColor = "#553300";
-					config1.waveTextColor = "#805615";
-					config1.waveColor = "#AA7D39";
-					config1.circleThickness = 0.1;
-					config1.circleFillGap = 0.2;
-					config1.textVertPosition = 0.8;
-					config1.waveAnimateTime = 2000;
-					config1.waveHeight = 0.3;
-					config1.waveCount = 1;
-					<!-- config1.circleColor = "#FF7777"; -->
-					<!-- config1.textColor = "#FF4444"; -->
-					<!-- config1.waveTextColor = "#FFAAAA"; -->
-					<!-- config1.waveColor = "#FFDDDD"; -->
-					<!-- config1.circleThickness = 0.2; -->
-					<!-- config1.textVertPosition = 0.2; -->
-					<!-- config1.waveAnimateTime = 1000; -->
+					config1.circleColor = "#FF7777";
+					config1.textColor = "#FF4444";
+					config1.waveTextColor = "#FFAAAA";
+					config1.waveColor = "#FFDDDD";
+					config1.circleThickness = 0.2;
+					config1.textVertPosition = 0.2;
+					config1.waveAnimateTime = 1000;
 					var gauge2= loadLiquidFillGauge("fillgauge2", 28, config1);
 					var config2 = liquidFillGaugeDefaultSettings();
 					config2.circleColor = "#D4AB6A";

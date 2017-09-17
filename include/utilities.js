@@ -1,4 +1,6 @@
 let crypto = require("crypto");
+let http = require("http");
+let https = require("https");
 
 module.exports = {
 	/**
@@ -55,5 +57,64 @@ module.exports = {
 			
 			callback(undefined, buffer.toString("base64").replace(/\//g, "_").replace(/\+/g, "-"));
 		});
+	},
+	
+	httpRequest: function (host, path, requestOptions, bodyData, callback, errorCallback) {
+		let httpModule = http;
+		let options = {
+			host: host,
+			path: path
+		};
+
+		if (requestOptions) {
+			this.each(requestOptions, (key, value) => {
+				options[key] = value;
+			});
+		}
+
+		if (options.protocol == "https:") {
+			httpModule = https;
+		}
+		
+		let request = httpModule.request(options, (response) => {
+			let data = "";
+			response.on("data", (chunk) => {
+				data += chunk;
+			});
+
+			response.on("end", () => {
+				callback(data);
+			});
+		});
+
+		request.on("socket", (socket) => {
+			socket.setTimeout(10000);  
+			socket.on("timeout", () => {
+				request.abort();
+				if (errorCallback) {
+					errorCallback(new Error("Request timed out."));
+				}
+			});
+		});
+
+		request.on("error", (error) => {
+			if (errorCallback) {
+				errorCallback(error);
+			}
+		});
+
+		if (bodyData) {
+			request.write(bodyData);
+		}
+
+		request.end();
+	},
+	
+	each: function (instance, callback) {
+		for (let key in instance) {
+			if (instance.hasOwnProperty(key)) {
+				callback(key, instance[key]);
+			}
+		}
 	}
 }

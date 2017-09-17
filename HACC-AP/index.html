@@ -97,6 +97,7 @@ function mkchart(
   data, // dataset
   prefix, // unique name for this chart
   orig_cx,orig_cy,radius, // center location and radius
+  def_max, // default maximum range (if there is a greater one, this one will be max)
   clrs // colors: background, line, polygon, label
 ){
 
@@ -111,6 +112,7 @@ function mkchart(
       data.map(function(d){
         return Math.max.apply(null,d.list);
       }));
+  max_val = Math.max(max_val,def_max);
 
   var lines = canv.selectAll("line."+prefix).data(items).enter().append("line")
       .attr("class",prefix);
@@ -257,7 +259,7 @@ function go2energy(){
     list :  [45,50,30,43,30,20]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Energy",300,300,200,{back:"indigo",line:"gray",text:"aqua"});
+  mkchart(canv,items,data,"Energy",300,300,200,0,{back:"indigo",line:"gray",text:"aqua"});
 
 
   items = [
@@ -279,7 +281,7 @@ function go2energy(){
     list :  [5,10,50]
   };
   data = [data1,data2,data3];
-  mkchart(canv,items,data,"Energy2",700,300,130,{back:"steelblue",line:"black",text:"mediumblue"});
+  mkchart(canv,items,data,"Energy2",700,300,130,0,{back:"steelblue",line:"black",text:"mediumblue"});
 
 }
 
@@ -301,7 +303,7 @@ function go2waste(){
     list :  [45,55,60,20,30]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Waste",300,300,200,{back:"yellow",line:"black",text:"brown"});
+  mkchart(canv,items,data,"Waste",300,300,200,0,{back:"yellow",line:"black",text:"brown"});
 
 }
 
@@ -324,7 +326,7 @@ function go2food(){
     list :  [45,20,30,50,10,55,60]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Food",300,300,200,{back:"pink",line:"magenta",text:"brown"});
+  mkchart(canv,items,data,"Food",300,300,200,0,{back:"pink",line:"magenta",text:"brown"});
 }
 
 // Aloha+Nature charts
@@ -346,7 +348,7 @@ function go2nature(){
     list :  [45,50,43,55,20,30,20,60]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Nature",300,300,200,{back:"cyan",line:"green",text:"green"});
+  mkchart(canv,items,data,"Nature",300,300,200,0,{back:"cyan",line:"green",text:"green"});
 }
 
 // show the default charts

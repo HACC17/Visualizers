@@ -75,20 +75,30 @@
           <h1>Dashboard</h1>
 				<svg id="fillgauge1" width="97%" height="250" onclick="gauge1.update(NewValue());"></svg>
 				<svg id="fillgauge2" width="19%" height="200" onclick="gauge2.update(NewValue());"></svg>
-				<svg id="fillgauge3" width="19%" height="200" onclick="gauge3.update(NewValue());"></svg>
+		i8		<!-- <svg id="fillgauge3" width="19%" height="200" onclick="gauge3.update(NewValue());"></svg> -->
 				<!-- <svg id="fillgauge4" width="19%" height="200" onclick="gauge4.update(NewValue());"></svg> -->
 				<!-- <svg id="fillgauge5" width="19%" height="200" onclick="gauge5.update(NewValue());"></svg> -->
 				<!-- <svg id="fillgauge6" width="19%" height="200" onclick="gauge6.update(NewValue());"></svg> -->
 				<script language="JavaScript">
 					var gauge1 = loadLiquidFillGauge("fillgauge1", 55);
 					var config1 = liquidFillGaugeDefaultSettings();
-					config1.circleColor = "#FF7777";
-					config1.textColor = "#FF4444";
-					config1.waveTextColor = "#FFAAAA";
-					config1.waveColor = "#FFDDDD";
-					config1.circleThickness = 0.2;
-					config1.textVertPosition = 0.2;
-					config1.waveAnimateTime = 1000;
+					config1.circleColor = "#D4AB6A";
+					config1.textColor = "#553300";
+					config1.waveTextColor = "#805615";
+					config1.waveColor = "#AA7D39";
+					config1.circleThickness = 0.1;
+					config1.circleFillGap = 0.2;
+					config1.textVertPosition = 0.8;
+					config1.waveAnimateTime = 2000;
+					config1.waveHeight = 0.3;
+					config1.waveCount = 1;
+					<!-- config1.circleColor = "#FF7777"; -->
+					<!-- config1.textColor = "#FF4444"; -->
+					<!-- config1.waveTextColor = "#FFAAAA"; -->
+					<!-- config1.waveColor = "#FFDDDD"; -->
+					<!-- config1.circleThickness = 0.2; -->
+					<!-- config1.textVertPosition = 0.2; -->
+					<!-- config1.waveAnimateTime = 1000; -->
 					var gauge2= loadLiquidFillGauge("fillgauge2", 28, config1);
 					var config2 = liquidFillGaugeDefaultSettings();
 					config2.circleColor = "#D4AB6A";
@@ -101,15 +111,15 @@
 					config2.waveAnimateTime = 2000;
 					config2.waveHeight = 0.3;
 					config2.waveCount = 1;
-					var gauge3 = loadLiquidFillGauge("fillgauge3", 60.1, config2);
-					var config3 = liquidFillGaugeDefaultSettings();
-					config3.textVertPosition = 0.8;
-					config3.waveAnimateTime = 5000;
-					config3.waveHeight = 0.15;
-					config3.waveAnimate = false;
-					config3.waveOffset = 0.25;
-					config3.valueCountUp = false;
-					config3.displayPercent = false;
+					<!-- var gauge3 = loadLiquidFillGauge("fillgauge3", 60.1, config2); -->
+					<!-- var config3 = liquidFillGaugeDefaultSettings(); -->
+					<!-- config3.textVertPosition = 0.8; -->
+					<!-- config3.waveAnimateTime = 5000; -->
+					<!-- config3.waveHeight = 0.15; -->
+					<!-- config3.waveAnimate = false; -->
+					<!-- config3.waveOffset = 0.25; -->
+					<!-- config3.valueCountUp = false; -->
+					<!-- config3.displayPercent = false; -->
 					<!-- var gauge4 = loadLiquidFillGauge("fillgauge4", 50, config3); -->
 					<!-- var config4 = liquidFillGaugeDefaultSettings(); -->
 					<!-- config4.circleThickness = 0.15; -->

@@ -57,23 +57,23 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="#">Aloha+Energy <span class="sr-only">(current)</span></a>
+              <a id="btn_energy" class="nav-link active" href="javascript:go2energy()">Aloha+Energy <span id="spn_energy" class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Aloha+Waste</a>
+              <a id="btn_waste" class="nav-link" href="javascript:go2waste()">Aloha+Waste <span id="spn_waste" class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Aloha+Food</a>
+              <a id="btn_food" class="nav-link" href="javascript:go2food()">Aloha+Food <span id="spn_food" class="sr-only"></span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Aloha+Nature</a>
+              <a id="btn_nature" class="nav-link" href="javascript:go2nature()">Aloha+Nature <span id="spn_nature" class="sr-only"></span></a>
             </li>
           </ul>
         </nav>
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="main">
-          <h1>Dashboard</h1>
-  <p id="debug">debug</p>
+          <h1>Over View</h1>
+          <!-- charts will go here -->
           <svg id="canvas" width="1000" height="1000">
           </svg>
         </main>
@@ -103,7 +103,7 @@ function mkchart(
   var max_val = Math.max.apply(null,data.map(function(d){return d.val;}));
   var polysubid = ["back", "data"];
 
-  d3.selectAll("#debug").text("asdf");
+  //d3.selectAll("#debug").text("asdf");
   //d3.select("#debug").selectAll("p").data(["a","b","c"]).enter().append("p").text(function(d){return prefix + d;});
 
 
@@ -186,49 +186,133 @@ function mkchart(
       .attr("opacity",1);
 }
 
-var canv = d3.select("#canvas");
+function selectButton(indx){
+  var btn_energy = d3.select("#btn_energy").attr("class","nav-link");
+  var spn_energy = d3.select("#spn_energy").text("");
+  var btn_waste = d3.select("#btn_waste").attr("class","nav-link");
+  var spn_waste = d3.select("#spn_waste").text("");
+  var btn_food = d3.select("#btn_food").attr("class","nav-link");
+  var spn_food = d3.select("#spn_food").text("");
+  var btn_nature = d3.select("#btn_nature").attr("class","nav-link");
+  var spn_nature = d3.select("#spn_nature").text("");
+
+  if(indx=="energy"){
+    btn_energy.attr("class","nav-link active");
+    spn_energy.text("(current)");
+  }else if(indx=="waste"){
+    btn_waste.attr("class","nav-link active");
+    spn_waste.text("(current)");
+  }else if(indx=="food"){
+    btn_food.attr("class","nav-link active");
+    spn_food.text("(current)");
+  }else if(indx=="nature"){
+    btn_nature.attr("class","nav-link active");
+    spn_nature.text("(current)");
+  }else{
+    btn_energy.attr("class","nav-link active");
+    spn_energy.text("(current)");
+  }
+}
 
 // adjust the area to draw charts
+var canv = d3.select("#canvas");
 canv.attr("width",2000).attr("height",5000);
 
-// chart 1
-var data = [
-  {label:"name1",val:50},
-  {label:"name2",val:30},
-  {label:"name3",val:20},
-  {label:"name4",val:10},
-  {label:"name5",val:56},
-  {label:"name6",val:26}];
-mkchart(canv,data,"data1",200,200,150,{back:"cyan",line:"green",poly:"lime",text:"green"});
+// Aloha+Energy charts
+function go2energy(){
+  selectButton("energy");
+  canv.selectAll("*").remove();
+  // chart 1
+  var data = [
+    {label:"name1",val:50},
+    {label:"name2",val:30},
+    {label:"name3",val:20},
+    {label:"name4",val:10},
+    {label:"name5",val:56},
+    {label:"name6",val:26}];
+  mkchart(canv,data,"Energy1",300,230,200,{back:"cyan",line:"green",poly:"lime",text:"green"});
 
-// chart 2
-var data2 = [
-  {label:"item1",val:25},
-  {label:"item2",val:55},
-  {label:"item3",val:30}
-];
-mkchart(canv,data2,"data2",700,200,100,{back:"pink",line:"black",poly:"red",text:"black"});
+  // chart 2
+  var data2 = [
+    {label:"item1",val:25},
+    {label:"item2",val:55},
+    {label:"item3",val:30}
+  ];
+  mkchart(canv,data2,"Energy2",700,200,100,{back:"pink",line:"black",poly:"red",text:"black"});
+}
 
-// chart 3
-var data3 = [
-  {label:"item1",val:25},
-  {label:"item2",val:55},
-  {label:"item3",val:30},
-  {label:"item4",val:100},
-  {label:"item5",val:30}
-];
-mkchart(canv,data3,"data3",300,600,180,{back:"cyan",line:"grey",poly:"green",text:"blue"});
+function go2waste(){
+  selectButton("waste");
+  canv.selectAll("*").remove();
+  // chart 3
+  var data3 = [
+    {label:"item1",val:25},
+    {label:"item2",val:55},
+    {label:"item3",val:30},
+    {label:"item4",val:100},
+    {label:"item5",val:30}
+  ];
+  mkchart(canv,data3,"Waste1",300,230,180,{back:"cyan",line:"grey",poly:"green",text:"blue"});
 
-// chart 4
-var data4 = [
-  {label:"item1",val:25},
-  {label:"item2",val:55},
-  {label:"item3",val:30},
-  {label:"item4",val:100},
-  {label:"item5",val:30}
-];
-mkchart(canv,data4,"data4",700,500,100,{back:"brown",line:"orange",poly:"yellow",text:"black"});
+  // chart 4
+  var data4 = [
+    {label:"item1",val:25},
+    {label:"item2",val:55},
+    {label:"item3",val:30},
+    {label:"item4",val:100},
+    {label:"item5",val:30}
+  ];
+  mkchart(canv,data4,"Waste2",700,200,100,{back:"brown",line:"orange",poly:"yellow",text:"black"});
+}
 
+// Aloha+Food charts
+function go2food(){
+  selectButton("food");
+  canv.selectAll("*").remove();
+  // chart 1
+  var data = [
+    {label:"name1",val:50},
+    {label:"name2",val:30},
+    {label:"name3",val:20},
+    {label:"name4",val:10},
+    {label:"name5",val:56},
+    {label:"name6",val:26}];
+  mkchart(canv,data,"Food1",300,230,200,{back:"cyan",line:"green",poly:"lime",text:"green"});
 
+  // chart 2
+  var data2 = [
+    {label:"item1",val:25},
+    {label:"item2",val:55},
+    {label:"item3",val:30}
+  ];
+  mkchart(canv,data2,"Food2",700,200,100,{back:"pink",line:"black",poly:"red",text:"black"});
+}
+
+// Aloha+Nature charts
+function go2nature(){
+  selectButton("nature");
+  canv.selectAll("*").remove();
+  // chart 1
+  var data = [
+    {label:"name1",val:50},
+    {label:"name2",val:30},
+    {label:"name3",val:20},
+    {label:"name4",val:10},
+    {label:"name5",val:56},
+    {label:"name6",val:26}];
+  mkchart(canv,data,"Nature1",300,230,200,{back:"cyan",line:"green",poly:"lime",text:"green"});
+
+  // chart 2
+  var data2 = [
+    {label:"item1",val:25},
+    {label:"item2",val:55},
+    {label:"item3",val:30},
+    {label:"item4",val:30}
+  ];
+  mkchart(canv,data2,"Nature2",700,200,100,{back:"pink",line:"black",poly:"red",text:"black"});
+}
+
+// show the default charts
+go2energy();
 
 </script>

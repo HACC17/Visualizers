@@ -9,10 +9,10 @@ let projectIdMapping = {
 module.exports = {
 	get: (key, callback) => {
             if (key in projectIdMapping) {
-                return projectIdMapping[key];
+                callback(undefined, projectIdMapping[key]);
             }
             else {
-                return false;
+                callback(new Error());
             } 
 	}
         //return contents of key or json files. 

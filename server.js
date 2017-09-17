@@ -55,7 +55,7 @@ application.use((request, response, next) => {
 	
 	if (request.path.charAt(request.path.length - 1) == "/") {
 		// Try to serve an index.html if the request is for a directory
-		path += "index.html";
+		path += "index";
 	}
 	
 	// Look for a file with the same path but with the .html extension appended

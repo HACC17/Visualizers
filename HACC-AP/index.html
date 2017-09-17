@@ -84,7 +84,114 @@
 </html>
 
 <script>
+// function chart
+// display a chart based on the given dataset
+function mkchart(
+  canv, // svg object given by d3.select
+  data, // dataset each element must have label:<string>,val:<value>
+  prefix, // unique name for this chart
+  orig_cx,orig_cy,radius, // center location and radius
+  clrs // colors: background, line, polygon, label
+){
 
+  // start
+  var t_line_grow = 500;
+  var t_text_appear = 700;
+  var t_poly_grow = 700;
+
+  var num = data.length;
+  var max_val = Math.max.apply(null,data.map(function(d){return d.val;}));
+  var polysubid = ["back", "data"];
+
+  d3.selectAll("#debug").text("asdf");
+  //d3.select("#debug").selectAll("p").data(["a","b","c"]).enter().append("p").text(function(d){return prefix + d;});
+
+
+  var lines = canv.selectAll("line."+prefix).data(data).enter().append("line")
+      .attr("class",prefix);
+  var polygons = canv.selectAll("polygon."+prefix).data(polysubid)
+      .enter().append("polygon")
+      .attr("id",function(d){ return prefix + d; })
+      .attr("class",prefix);
+  var back = canv.select("#" + prefix + polysubid[0]);
+  var poly = canv.select("#" + prefix + polysubid[1]);
+  var labels = canv.selectAll("text."+prefix).data(data).enter().append("text")
+      .attr("class",prefix)
+      .text(function(d){return d.label;});
+  var title = canv.selectAll("text."+prefix+"-title").data(["title"]).enter().append("text")
+      .attr("class",prefix+"-title")
+      .attr("x",orig_cx).attr("y",orig_cy)
+      .attr("text-anchor","middle")
+      .attr("font-size","30pt")
+      .attr("font-weight","bold")
+      .attr("fill",clrs.text)
+      .attr("opacity",0)
+      .text(prefix);
+
+  //initialize background polygon
+  back.attr("points",""+orig_cx+","+orig_cy).attr("opacity","0.3").attr("fill",clrs.back)
+    .attr("points",
+      function() {
+        return data.map(function(d,i) {
+          return [
+            radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
+            radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
+          ].join(",");
+        }).join(" ");
+      });
+  //extend the lines
+  lines
+    .attr("stroke",clrs.line).attr("stroke-width","2")
+    .attr("x1",orig_cx).attr("y1",orig_cy)
+    .attr("x2",orig_cx).attr("y2",orig_cy)
+    .transition().duration(t_line_grow)
+    .attr("x2",function(d,i){ return radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
+    .attr("y2",function(d,i){ return radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; });
+  //display the labels
+  labels
+    .attr("fill","white")
+    .attr("x",function(d,i){ return (20+radius)*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
+    .attr("y",function(d,i){ return (20+radius)*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; })
+    .attr("text-anchor",function(d,i){
+      if(i == 0 || i == num/2){ return "middle"; }
+      else if(i < num/2){ return "start"; }
+      else{ return "end"; }
+    })
+    .transition().delay(t_line_grow).duration(t_text_appear)
+    .attr("fill",clrs.text);
+  //extend the polygon
+  poly
+    .attr("points",
+      function() {
+        return data.map(function(d,i) {
+          return [
+            orig_cx,
+            orig_cy
+          ].join(",");
+        }).join(" ");
+      })
+    .attr("opacity","0.4").attr("fill",clrs.poly).transition().delay(t_line_grow).duration(t_poly_grow)
+    .attr("points",
+      function() {
+        return data.map(function(d,i) {
+          return [
+            d.val*radius/max_val*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
+            d.val*radius/max_val*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
+          ].join(",");
+        }).join(" ");
+      });
+
+  // show the title
+  title.transition().delay(t_line_grow).duration(t_text_appear)
+      .attr("opacity",1);
+}
+
+var canv = d3.select("#canvas");
+
+// adjust the area to draw charts
+canv.attr("width",2000).attr("height",5000);
+
+// chart 1
 var data = [
   {label:"name1",val:50},
   {label:"name2",val:30},
@@ -92,85 +199,35 @@ var data = [
   {label:"name4",val:10},
   {label:"name5",val:56},
   {label:"name6",val:26}];
-var dataid = "dt1";
-var canv = d3.select("#canvas");
+mkchart(canv,data,"data1",200,200,150,{back:"cyan",line:"green",poly:"lime",text:"green"});
 
-// start
-var t_line_grow = 500;
-var t_text_appear = 700;
-var t_poly_grow = 700;
+// chart 2
+var data2 = [
+  {label:"item1",val:25},
+  {label:"item2",val:55},
+  {label:"item3",val:30}
+];
+mkchart(canv,data2,"data2",700,200,100,{back:"pink",line:"black",poly:"red",text:"black"});
 
-var orig_cx = 200;
-var orig_cy = 200;
-var radius = 150;
-var num = data.length;
-var max_val = Math.max.apply(null,data.map(function(d){return d.val;}));
-var polysubid = ["back", "data"];
+// chart 3
+var data3 = [
+  {label:"item1",val:25},
+  {label:"item2",val:55},
+  {label:"item3",val:30},
+  {label:"item4",val:100},
+  {label:"item5",val:30}
+];
+mkchart(canv,data3,"data3",300,600,180,{back:"cyan",line:"grey",poly:"green",text:"blue"});
 
-d3.selectAll("#debug").text("asdf");
-d3.select("#main").selectAll("p").data(data).enter().append("p").text(function(d){return d.label;});
-
-var lines = canv.selectAll("line").data(data).enter().append("line").attr("id",function(d){return dataid + "-" + d.label;});
-var polygons = canv.selectAll("polygon").data(polysubid)
-    .enter().append("polygon").attr("id",function(d){ return d; });
-var back = canv.select("#back");
-var poly = canv.select("#data");
-var labels = canv.selectAll("text").data(data).enter().append("text")
-    .attr("id",function(d){return dataid + "-" + d.label;})
-    .text(function(d){return d.label;});
-
-//initialize background polygon
-back.attr("points",""+orig_cx+","+orig_cy).attr("opacity","0.3").attr("fill","gray")
-  .attr("points",
-    function() {
-      return data.map(function(d,i) {
-        return [
-          radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
-          radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
-        ].join(",");
-      }).join(" ");
-    });
-//extend the lines
-lines
-  .attr("stroke","black").attr("stroke-width","2")
-  .attr("x1",orig_cx).attr("y1",orig_cy)
-  .attr("x2",orig_cx).attr("y2",orig_cy)
-  .transition().duration(t_line_grow)
-  .attr("x2",function(d,i){ return radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
-  .attr("y2",function(d,i){ return radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; });
-//display the labels
-labels
-  .attr("fill","white")
-  .attr("x",function(d,i){ return (20+radius)*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
-  .attr("y",function(d,i){ return (20+radius)*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; })
-  .attr("text-anchor",function(d,i){
-    if(i == 0 || i == num/2){ return "middle"; }
-    else if(i < num/2){ return "start"; }
-    else{ return "end"; }
-  })
-  .transition().delay(t_line_grow).duration(t_text_appear)
-  .attr("fill","green");
-//extend the polygon
-poly
-  .attr("points",
-    function() {
-      return data.map(function(d,i) {
-        return [
-          orig_cx,
-          orig_cy
-        ].join(",");
-      }).join(" ");
-    })
-  .attr("opacity","0.4").attr("fill","green").transition().delay(t_line_grow).duration(t_poly_grow)
-  .attr("points",
-    function() {
-      return data.map(function(d,i) {
-        return [
-          d.val*radius/max_val*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
-          d.val*radius/max_val*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
-        ].join(",");
-      }).join(" ");
-    });
+// chart 4
+var data4 = [
+  {label:"item1",val:25},
+  {label:"item2",val:55},
+  {label:"item3",val:30},
+  {label:"item4",val:100},
+  {label:"item5",val:30}
+];
+mkchart(canv,data4,"data4",700,500,100,{back:"brown",line:"orange",poly:"yellow",text:"black"});
 
 
 

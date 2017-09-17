@@ -1,101 +1,57 @@
-<!DOCTYPE HTML>
-<html>
-    <head>
-        <title>HACC Visualization Team</title>
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-    </head>
-    <body>
-        <span style="font-size: 132px;white-space:nowrap" id="title">Aloha+ Data Visualization</span>
-        <br><br>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="main page" content="">
+    <meta name="Tetsuya" content="">
+    <!-- <link rel="icon" href="../../../../favicon.ico"> -->
 
-        <table>
-            <tr>
-                <td width="100%" id="img">
-                    <img src="https://i.ytimg.com/vi/6MyjFHd04R8/maxresdefault.jpg" width="100%">
-                </td>
-                <td id="members">
-                    <svg width="0" height="200" id="graph">
-                        <text x="200" y="50" id="t_capt" fill="white">TEAM CAPTAIN: Alice Chen;</text>
-                        <text x="200" y="50" id="t_back" fill="white">Backend Team: Alice Chen, Sae Hyun Song, Ethan Chow;</text>
-                        <text x="200" y="50" id="t_frnt" fill="white">Frontend Team: David Wang, Sharie Anne Mamuad, Eddie Wen, Tetsuya Idota;</text>
-                        <line x1="200" y1="50" x2="200" y2="50" id="l_capt" stroke="white" stroke-width="2"></line>
-                        <line x1="200" y1="50" x2="200" y2="50" id="l_back" stroke="white" stroke-width="2"></line>
-                        <line x1="200" y1="50" x2="200" y2="50" id="l_frnt" stroke="white" stroke-width="2"></line>
-                        <circle cx="200" cy="50" r="10" id="c_capt" fill="white"></circle>
-                        <circle cx="200" cy="50" r="10" id="c_back" fill="white"></circle>
-                        <circle cx="200" cy="50" r="10" id="c_frnt" fill="white"></circle>
-                    </svg>
-                </td>
-            </tr>
-        </table>
+    <title>HACC Visualization Team</title>
 
-    </body>
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+
+    <!-- d3 -->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+    <!-- jQuery -->
+    <script src="//code.jquery.com/jquery.min.js"></script>
+    <script>
+      $.get("menu/navbar.html", function(data){ $("#navbar").replaceWith(data); });
+      $.get("menu/sidebar.html", function(data){ $("#sidebar").replaceWith(data); });
+      $.get("intro.html", function(data){ $("#main").replaceWith(data); });
+    </script>
+  </head>
+
+  <body>
+    <!-- navigation bar -->
+    <div id="navbar"></div>
+
+    <div class="container-fluid">
+      <div class="row">
+
+        <!-- side bar -->
+        <div id="sidebar"></div>
+
+        <!-- main screen -->
+        <div id="main"></div>
+
+      </div>
+    </div>
+
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script>window.jQuery || document.write('<script src="../../../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="../../../../assets/js/vendor/popper.min.js"></script>
+    <script src="../../../../dist/js/bootstrap.min.js"></script>
+  </body>
 </html>
 
-<script>
-// steps
-var t_shrink = 700;
-var t_appear = 400;
-var t_move = 800;
-
-// locations of graphs
-var x1 = 45;
-var y1 = 50;
-var x2 = 115;
-var y2 = 110;
-var x3 = 30;
-var y3 = 150;
-var x_off = 20;
-var y_off = 5;
-
-// shrinking title
-d3.selectAll("#title").transition().duration(t_shrink)
-    .style("font-size","50px");
-// shrinking image
-d3.selectAll("#img").transition().duration(t_shrink)
-    .attr("width" , "50%");
-
-// showing the canvas
-d3.selectAll("#graph").transition().duration(t_shrink)
-     .attr("width","700");
-
-// moving graph and texts
-d3.select("#c_capt")
-    .transition().delay(t_shrink)
-    .transition().duration(t_appear).attr("fill","lime")
-    .transition().duration(t_move).attr("cx",String(x1)).attr("cy",String(y1));
-d3.select("#l_capt")
-    .transition().delay(t_shrink)
-    .transition().duration(t_appear).attr("stroke","cyan")
-    .transition().duration(t_move).attr("x1",String(x1)).attr("y1",String(y1)).attr("x2",String(x2)).attr("y2",String(y2));
-d3.select("#t_capt").attr("x",String(x1+x_off)).attr("y",String(y1+y_off))
-    .transition().delay(t_shrink)
-    .transition().delay(t_move)
-    .transition().duration(t_appear).attr("fill","green");
-
-d3.select("#c_back")
-    .transition().delay(t_shrink)
-    .transition().duration(t_appear).attr("fill","lime")
-    .transition().duration(t_move).attr("cx",String(x2)).attr("cy",String(y2));
-d3.select("#l_back")
-    .transition().delay(t_shrink)
-    .transition().duration(t_appear).attr("stroke","cyan")
-    .transition().duration(t_move).attr("x1",String(x2)).attr("y1",String(y2)).attr("x2",String(x3)).attr("y2",String(y3));
-d3.select("#t_back").attr("x",String(x2+x_off)).attr("y",String(y2+y_off))
-    .transition().delay(t_shrink)
-    .transition().delay(t_move)
-    .transition().duration(t_appear).attr("fill","green");
-
-d3.select("#c_frnt")
-    .transition().delay(t_shrink)
-    .transition().duration(t_appear).attr("fill","lime")
-    .transition().duration(t_move).attr("cx",String(x3)).attr("cy",String(y3));
-d3.select("#l_frnt")
-    .transition().delay(t_shrink)
-    .transition().duration(t_appear).attr("stroke","cyan")
-    .transition().duration(t_move).attr("x1",String(x3)).attr("y1",String(y3)).attr("x2",String(x1)).attr("y2",String(y1));
-d3.select("#t_frnt").attr("x",String(x3+x_off)).attr("y",String(y3+y_off))
-    .transition().delay(t_shrink)
-    .transition().delay(t_move)
-    .transition().duration(t_appear).attr("fill","green");
-</script>

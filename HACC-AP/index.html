@@ -123,7 +123,7 @@ function mkchart(
   var names = canv.selectAll("text."+prefix+"name").data(data).enter().append("text")
       .attr("class",prefix+"name")
       .attr("fill",function(d){return d.clr;})
-      .attr("x",orig_cx+radius+50).attr("y",function(d,i){return 20+i*20;})
+      .attr("x",orig_cx+radius+50).attr("y",function(d,i){return orig_cy-radius*0.9+i*20;})
       .text(function(d){return d.name;});
   var title = canv.selectAll("text."+prefix+"title").data(["title"]).enter().append("text")
       .attr("class",prefix+"title")
@@ -251,7 +251,7 @@ function go2energy(){
     list :  [45,50,30,43,30,20]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Energy",300,250,200,{back:"indigo",line:"gray",text:"aqua"});
+  mkchart(canv,items,data,"Energy",300,300,200,{back:"indigo",line:"gray",text:"aqua"});
 
 
   items = [
@@ -265,7 +265,7 @@ function go2energy(){
   data2 = {
     name : "Data2",
     clr : "violet",
-    list :  [43,30,20]
+    list :  [23,30,20]
   };
   data3 = {
     name : "Data3",
@@ -273,7 +273,7 @@ function go2energy(){
     list :  [5,10,50]
   };
   data = [data1,data2,data3];
-  mkchart(canv,items,data,"Energy2",700,250,130,{back:"steelblue",line:"black",text:"mediumblue"});
+  mkchart(canv,items,data,"Energy2",700,300,130,{back:"steelblue",line:"black",text:"mediumblue"});
 
 }
 
@@ -295,7 +295,7 @@ function go2waste(){
     list :  [45,55,60,20,30]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Waste",300,250,200,{back:"yellow",line:"black",text:"brown"});
+  mkchart(canv,items,data,"Waste",300,300,200,{back:"yellow",line:"black",text:"brown"});
 
 }
 
@@ -318,7 +318,7 @@ function go2food(){
     list :  [45,20,30,50,10,55,60]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Food",300,250,200,{back:"pink",line:"magenta",text:"brown"});
+  mkchart(canv,items,data,"Food",300,300,200,{back:"pink",line:"magenta",text:"brown"});
 }
 
 // Aloha+Nature charts
@@ -340,7 +340,7 @@ function go2nature(){
     list :  [45,50,43,55,20,30]
   };
   var data = [data1,data2];
-  mkchart(canv,items,data,"Nature",300,250,200,{back:"cyan",line:"green",text:"green"});
+  mkchart(canv,items,data,"Nature",300,300,200,{back:"cyan",line:"green",text:"green"});
 }
 
 // show the default charts

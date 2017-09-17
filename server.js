@@ -86,14 +86,15 @@ application.use((request, response, next) => {
 			// Look for the explicit file
 			fs.access(HTTP_DIRECTORY + path, fs.constants.R_OK, (error) => {
 				if (error) {
-					let error = new Error("404 Not Found");
-					error.status = 404;
-					error._method = request.method;
-					error._originalPath = request.path;
-					error._impliedPath = path;
+					let httpError = new Error("404 Not Found");
+					httpError.status = 404;
+					httpError._errorObject = httpError;
+					httpError._method = request.method;
+					httpError._originalPath = request.path;
+					httpError._impliedPath = path;
 
 					// Trigger the error handler chain
-					next(error);
+					next(httpError);
 					
 					return;
 				}

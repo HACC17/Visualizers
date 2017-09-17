@@ -56,8 +56,8 @@ application.use("/api/get/:id", (request, response, next) => {
 			return;
 		}
 		
-		request.setHeader("Content-Type", "text/plain");
-		request.send(data);
+		response.setHeader("Content-Type", "text/plain");
+		response.send(data);
 	});
 });
 

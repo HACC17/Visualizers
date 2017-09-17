@@ -77,7 +77,7 @@ application.use((request, response, next) => {
 					return;
 				}
 				
-				if (path.substr(path.length - ".html".length) == ".html") {
+				if (path.substring(path.length - "index.html") != "index.html" && path.substr(path.length - ".html".length) == ".html") {
 					// Send a 301 Moved Permanently
 					response.status(301);
 					response.setHeader("Location", path.substring(0, path.length - ".html".length));

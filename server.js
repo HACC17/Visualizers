@@ -61,6 +61,13 @@ application.use("/api/get/:id", (request, response, next) => {
 	});
 });
 
+// Send plain-text 404
+application.use("/api/*", (request, response, next) => {
+	response.status(404);
+	response.setHeader("Content-Type", "text/plain");
+	response.send("404 Not Found");
+});
+
 // Attempt to serve any file requested from the HACC-AP directory
 application.use((request, response, next) => {
 	// Handle only GET requests

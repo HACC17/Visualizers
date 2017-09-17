@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="main page" content="">
-    <meta name="Tetsuya" content="">
+    <meta name="" content="">
     <!-- <link rel="icon" href="../../../../favicon.ico"> -->
 
     <title>HACC Visualization Team</title>
@@ -21,9 +21,9 @@
     <!-- jQuery -->
     <script src="//code.jquery.com/jquery.min.js"></script>
     <script>
-      $.get("menu/navbar.html", function(data){ $("#navbar").replaceWith(data); });
-      $.get("menu/sidebar.html", function(data){ $("#sidebar").replaceWith(data); });
-      $.get("intro.html", function(data){ $("#main").replaceWith(data); });
+      $.get("/menu/navbar.html", function(data){ $("#navbar").replaceWith(data); });
+      $.get("/menu/sidebar.html", function(data){ $("#sidebar").replaceWith(data); });
+      $.get("/intro.html", function(data){ $("#main").replaceWith(data); });
     </script>
   </head>
 

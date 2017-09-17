@@ -18,6 +18,7 @@ let fs = require("fs");
 let ServerError = require(INCLUDE_DIRECTORY + "serverErrors");
 let template = require(INCLUDE_DIRECTORY + "template");
 let utilities = require(INCLUDE_DIRECTORY + "utilities");
+let socrata = require(INCLUDE_DIRECTORY + "socrataApi");
 
 // Add headers
 /*
@@ -39,6 +40,26 @@ application.use(function (request, response, next) {
 	next();
 });
 */
+
+application.use("/api/get/:id", (request, response, next) => {
+	socrata.get(request.params.id, (error, data) => {
+		if (error) {
+			let httpError = new Error("500 Internal Server Error");
+			httpError.status = 500;
+			httpError._errorObject = httpError;
+			httpError._method = request.method;
+			httpError._originalPath = request.path;
+			
+			// Trigger the error handler chain
+			next(httpError);
+			
+			return;
+		}
+		
+		request.setHeader("Content-Type", "text/plain");
+		request.send(data);
+	});
+});
 
 // Attempt to serve any file requested from the HACC-AP directory
 application.use((request, response, next) => {

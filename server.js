@@ -17,7 +17,6 @@ let fs = require("fs");
 let handlebars = require("handlebars");
 
 let ServerError = require(INCLUDE_DIRECTORY + "serverErrors");
-let template = require(INCLUDE_DIRECTORY + "template");
 let utilities = require(INCLUDE_DIRECTORY + "utilities");
 let socrata = require(INCLUDE_DIRECTORY + "socrataApi");
 

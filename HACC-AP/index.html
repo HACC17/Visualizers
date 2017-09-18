@@ -69,6 +69,7 @@
         </nav>
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="main">
+          <h1 style="color:black">Over View</h1>
           <!-- charts will go here -->
           <svg id="canvas" width="1000" height="1000">
           </svg>
@@ -196,7 +197,72 @@ function mkchart(
 
   // show the title
   title.transition().delay(t_line_grow).duration(t_text_appear)
-      .attr("opacity",0.4);
+      .attr("opacity",0.45);
+}
+
+
+function v2c(val){
+  // value ranging from 0 ot 100 to "00" to "ff"
+  var str = Math.floor(val*255/100.0).toString(16);
+  if(str.length == 1) str = "0" + str;
+  return str;
+}
+
+function hsv2code(H,S,V){
+  // generates RGB string form HSV values
+  // parameters from 0 to 100 exept for H
+  S = S/100.0;
+  V = V/100.0;
+  var C = V*S;
+  var buff = H/60.0;
+  var X = C*(1-Math.abs(H/60.0 - (Math.floor(buff/2)*2) - 1));
+  var m = V - C;
+
+  var Rsub, Gsub, Bsub;
+  if(H<60){
+    Rsub = C; Gsub = X; Bsub = 0;
+  }else if(H < 120){
+    Rsub = X; Gsub = C; Bsub = 0;
+  }else if(H < 180){
+    Rsub = 0; Gsub = C; Bsub = X;
+  }else if(H < 240){
+    Rsub = 0; Gsub = X; Bsub = C;
+  }else if(H < 300){
+    Rsub = X; Gsub = 0; Bsub = C;
+  }else{
+    Rsub = C; Gsub = 0; Bsub = X;
+  }
+  return "#" + v2c((Rsub + m)*100) + v2c((Gsub + m)*100) + v2c((Bsub + m)*100);
+
+}
+
+
+function loadData(c_indx,c_intv,filepath){
+  d3.csv(filepath,
+    function(error,data){
+      if(error) throw error;
+
+      var title = Object.keys(data[0])[0];
+      var items = data.map(function(d){ return Object.values(d)[0];});
+      console.log(items);
+      var datalist = [];
+      for(i = 0; i < Object.keys(data[0]).length-1; i++){
+        var data_temp = { name : "", clr : "", list : []};
+        data_temp.name = Object.keys(data[0])[i+1];
+        data_temp.clr = hsv2code((c_indx+i*c_intv)%360,100,80);
+        data_temp.list = data.map(function(d){ return Object.values(d)[i+1];});
+        console.log(data_temp);
+        datalist =  datalist.concat(data_temp);
+      }
+
+      var clrs = {
+        back : hsv2code((c_indx)%360,80,45),
+        line : hsv2code((c_indx)%360,70,60),
+        text : hsv2code((c_indx)%360,70,60)
+      };
+      mkchart(canv,items,datalist,title,300,300,200,0,clrs);
+    }
+  );
 }
 
 function selectButton(indx){
@@ -227,31 +293,17 @@ function selectButton(indx){
   }
 }
 
-// adjust the area to draw charts
-var canv = d3.select("#canvas");
-canv.attr("width",2000).attr("height",5000);
-
 // Aloha+Energy charts
 function go2energy(){
   selectButton("energy");
   canv.selectAll("*").remove();
 
-  var items = [
-    "item1","item2","item3","item4","item5","item6"
-  ];
-  var data1 = {
-    name : "Data1",
-    clr : "blue",
-    list :  [50,30,26,30,20,10]
-  };
-  var data2 = {
-    name : "Data2",
-    clr : "steelblue",
-    list :  [45,50,30,43,30,20]
-  };
-  var data = [data1,data2];
-  mkchart(canv,items,data,"Energy",300,300,200,0,{back:"indigo",line:"gray",text:"aqua"});
+  var c_indx = 240;
+  var c_intv = 40;
+  var filepath  ="/data/energy.csv";
 
+  loadData(c_indx,c_intv,filepath);
+/*
 
   items = [
     "item1","item2","item3"
@@ -273,29 +325,18 @@ function go2energy(){
   };
   data = [data1,data2,data3];
   mkchart(canv,items,data,"Energy2",700,300,130,0,{back:"steelblue",line:"black",text:"mediumblue"});
-
+*/
 }
 
 function go2waste(){
   selectButton("waste");
   canv.selectAll("*").remove();
 
-  var items = [
-    "item1","item2","item3","item4","item5"
-  ];
-  var data1 = {
-    name : "Data1",
-    clr : "crimson",
-    list :  [20,5,10,56,26]
-  };
-  var data2 = {
-    name : "Data2",
-    clr : "orange",
-    list :  [45,55,60,20,30]
-  };
-  var data = [data1,data2];
-  mkchart(canv,items,data,"Waste",300,300,200,0,{back:"yellow",line:"black",text:"brown"});
+  var c_indx = 30;
+  var c_intv = 40;
+  var filepath  ="/data/waste.csv";
 
+  loadData(c_indx,c_intv,filepath);
 }
 
 // Aloha+Food charts
@@ -303,21 +344,11 @@ function go2food(){
   selectButton("food");
   canv.selectAll("*").remove();
 
-  var items = [
-    "item1","item2","item3","item4","item5","item6","item7"
-  ];
-  var data1 = {
-    name : "Data1",
-    clr : "purple",
-    list :  [30,20,15,5,33,26,10]
-  };
-  var data2 = {
-    name : "Data2",
-    clr : "red",
-    list :  [45,20,30,50,10,55,60]
-  };
-  var data = [data1,data2];
-  mkchart(canv,items,data,"Food",300,300,200,0,{back:"pink",line:"magenta",text:"brown"});
+  var c_indx = 0;
+  var c_intv = 40;
+  var filepath  ="/data/food.csv";
+
+  loadData(c_indx,c_intv,filepath);
 }
 
 // Aloha+Nature charts
@@ -325,22 +356,17 @@ function go2nature(){
   selectButton("nature");
   canv.selectAll("*").remove();
 
-  var items = [
-    "item1","item2","item3","item4","item5","item6","item7","item8"
-  ];
-  var data1 = {
-    name : "Data1",
-    clr : "blue",
-    list :  [50,30,20,10,56,10,5,70]
-  };
-  var data2 = {
-    name : "Data2",
-    clr : "green",
-    list :  [45,50,43,55,20,30,20,60]
-  };
-  var data = [data1,data2];
-  mkchart(canv,items,data,"Nature",300,300,200,0,{back:"cyan",line:"green",text:"green"});
+  var c_indx = 120;
+  var c_intv = 40;
+  var filepath  ="/data/nature.csv";
+
+  loadData(c_indx,c_intv,filepath);
 }
+
+
+// adjust the area to draw charts
+var canv = d3.select("#canvas");
+canv.attr("width",2000).attr("height",5000);
 
 // show the default charts
 go2energy();

@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Metric Graph</title>
+		<style type="text/css">
+			html,
+			body {
+				margin: 0;
+				padding: 0;
+			}
+		</style>
+		<script src="https://code.highcharts.com/stock/highstock.js"></script>
+		<script type="text/javascript">
+			document.addEventListener("DOMContentLoaded", () => {
+				let chart = Highcharts.stockChart('container', {
+					credits: false,
+					rangeSelector: {
+					selected: 1
+					},
+					chart: {
+						type: 'areaspline',
+						zoomType: "x"
+					},
+					title: {
+						text: 'Thousand Barrels'
+					},
+					subtitle: {
+						text: 'Subtitle'
+					},
+					xAxis: {
+						allowDecimals: false,
+						labels: {
+							formatter: function () {
+								return this.value; // clean, unformatted number for year
+							}
+						},
+						plotLines: [{
+							color: 'red', // Color value
+							dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+							value: 1980, // Value of where the line will appear
+							width: 2 // Width of the line
+						}]
+					},
+					yAxis: {
+						title: {
+							text: 'Thousand Barrels'
+						},
+						labels: {
+							formatter: function () {
+								return this.value;
+							}
+						}
+					},
+					tooltip: {
+						pointFormat: 'Hawaii consumed <b>{point.y:,.0f}</b><br/>units petroleum in {point.x}'
+					},
+					plotOptions: {
+						area: {
+							pointStart: 1940,
+							marker: {
+								enabled: false,
+								symbol: 'circle',
+								radius: 2,
+								states: {
+									hover: {
+										enabled: true
+									}
+								}
+							}
+						}
+					},
+					series: [{
+						name: 'USA',
+						data: [{name:"1960-12-31T00:00:00.000",y:16844,x:1960}
+							,{name:"1961-12-31T00:00:00.000",y:20074,x:1961}
+							,{name:"1962-12-31T00:00:00.000",y:19015,x:1962}
+							,{name:"1963-12-31T00:00:00.000",y:19931,x:1963}
+							,{name:"1964-12-31T00:00:00.000",y:21257,x:1964}
+							,{name:"1965-12-31T00:00:00.000",y:22478,x:1965}
+							,{name:"1966-12-31T00:00:00.000",y:25113,x:1966}
+							,{name:"1967-12-31T00:00:00.000",y:28252,x:1967}
+							,{name:"1968-12-31T00:00:00.000",y:31456,x:1968}
+							,{name:"1969-12-31T00:00:00.000",y:33007,x:1969}
+							,{name:"1970-12-31T00:00:00.000",y:34105,x:1970}
+							,{name:"1971-12-31T00:00:00.000",y:36734,x:1971}
+							,{name:"1972-12-31T00:00:00.000",y:37753,x:1972}
+							,{name:"1973-12-31T00:00:00.000",y:38826,x:1973}
+							,{name:"1974-12-31T00:00:00.000",y:36739,x:1974}
+							,{name:"1975-12-31T00:00:00.000",y:37097,x:1975}
+							,{name:"1976-12-31T00:00:00.000",y:38047,x:1976}
+							,{name:"1977-12-31T00:00:00.000",y:40326,x:1977}
+							,{name:"1978-12-31T00:00:00.000",y:40945,x:1978}
+							,{name:"1979-12-31T00:00:00.000",y:44660,x:1979}
+							,{name:"1980-12-31T00:00:00.000",y:43562,x:1980}
+							,{name:"1981-12-31T00:00:00.000",y:38811,x:1981}
+							,{name:"1982-12-31T00:00:00.000",y:35706,x:1982}
+							,{name:"1983-12-31T00:00:00.000",y:36291,x:1983}
+							,{name:"1984-12-31T00:00:00.000",y:37297,x:1984}
+							,{name:"1985-12-31T00:00:00.000",y:40006,x:1985}
+							,{name:"1986-12-31T00:00:00.000",y:39044,x:1986}
+							,{name:"1987-12-31T00:00:00.000",y:39389,x:1987}
+							,{name:"1988-12-31T00:00:00.000",y:45902,x:1988}
+							,{name:"1989-12-31T00:00:00.000",y:48021,x:1989}
+							,{name:"1990-12-31T00:00:00.000",y:50015,x:1990}
+							,{name:"1991-12-31T00:00:00.000",y:45758,x:1991}
+							,{name:"1992-12-31T00:00:00.000",y:46655,x:1992}
+							,{name:"1993-12-31T00:00:00.000",y:41392,x:1993}
+							,{name:"1994-12-31T00:00:00.000",y:44843,x:1994}
+							,{name:"1995-12-31T00:00:00.000",y:43842,x:1995}
+							,{name:"1996-12-31T00:00:00.000",y:41631,x:1996}
+							,{name:"1997-12-31T00:00:00.000",y:39829,x:1997}
+							,{name:"1998-12-31T00:00:00.000",y:40493,x:1998}
+							,{name:"1999-12-31T00:00:00.000",y:39662,x:1999}
+							,{name:"2000-12-31T00:00:00.000",y:40591,x:2000}
+							,{name:"2001-12-31T00:00:00.000",y:41479,x:2001}
+							,{name:"2002-12-31T00:00:00.000",y:44772,x:2002}
+							,{name:"2003-12-31T00:00:00.000",y:46861,x:2003}
+							,{name:"2004-12-31T00:00:00.000",y:49098,x:2004}
+							,{name:"2005-12-31T00:00:00.000",y:51267,x:2005}
+							,{name:"2006-12-31T00:00:00.000",y:51564,x:2006}
+							,{name:"2007-12-31T00:00:00.000",y:52905,x:2007}
+							,{name:"2008-12-31T00:00:00.000",y:42397,x:2008}
+							,{name:"2009-12-31T00:00:00.000",y:42472,x:2009}
+							,{name:"2010-12-31T00:00:00.000",y:42729,x:2010}
+							,{name:"2011-12-31T00:00:00.000",y:44334,x:2011}
+							,{name:"2012-12-31T00:00:00.000",y:42749,x:2012}
+							,{name:"2013-12-31T00:00:00.000",y:42296,x:2013}
+							,{name:"2014-12-31T00:00:00.000",y:41724,x:2014}
+						]
+					}]
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+	</body>
+</html>

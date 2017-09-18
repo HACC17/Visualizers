@@ -88,7 +88,7 @@ module.exports = {
 		});
 
 		request.on("socket", (socket) => {
-			socket.setTimeout(10000);  
+			socket.setTimeout(10000);
 			socket.on("timeout", () => {
 				request.abort();
 				if (errorCallback) {

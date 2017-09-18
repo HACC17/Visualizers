@@ -1,4 +1,4 @@
-let utilities =  require("../include/utilities");
+let utilities = require("../include/utilities");
 
 let projectIdMapping = {
 	// w6ex-izbf is a duplicate, but missing one field
@@ -8,13 +8,12 @@ let projectIdMapping = {
 
 module.exports = {
 	get: (key, callback) => {
-            if (key in projectIdMapping) {
-                utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key] + ".json", {protocol: "https:"}, undefined, (data) => {
-                callback(undefined, data)}, (error) => {callback(error)});
-            }
-            else {
-                callback(new Error("INVAID ETHAN"));
-            } 
+			if (key in projectIdMapping) {
+				utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key] + ".json", {protocol: "https:"}, undefined, (data) => {
+				callback(undefined, data)}, (error) => {callback(error)});
+			} else {
+				callback(new Error("Invalid dataset ID"));
+			} 
 	}
-        //return contents of key or json files. 
+		//return contents of key or json files. 
 };

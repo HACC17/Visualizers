@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+  {{{head}}}
+
+  <body>
+    {{{header}}}
+
+    <div class="container-fluid">
+      <div class="row">
+        <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
+              <a id="btn_energy" class="nav-link active" href="javascript:go2energy()">Energy <span id="spn_energy" class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a id="btn_waste" class="nav-link" href="javascript:go2waste()">Waste <span id="spn_waste" class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a id="btn_food" class="nav-link" href="javascript:go2food()">Food <span id="spn_food" class="sr-only"></span></a>
+            </li>
+            <li class="nav-item">
+              <a id="btn_nature" class="nav-link" href="javascript:go2nature()">Nature <span id="spn_nature" class="sr-only"></span></a>
+            </li>
+          </ul>
+        </nav>
+
+        <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main" id="main">
+          <h1 style="color:black">Overview</h1>
+          <!-- charts will go here -->
+          <svg id="canvas" width="1000" height="1000">
+          </svg>
+        </main>
+      </div>
+    </div>
+
+  </body>
+</html>
+
+<script>
+// function chart
+// display a chart based on the given dataset
+function mkchart(
+  canv, // svg object given by d3.select
+  items, // list of metrics
+  data, // dataset
+  prefix, // unique name for this chart
+  orig_cx,orig_cy,radius, // center location and radius
+  def_max, // default maximum range (if there is a greater one, this one will be max)
+  clrs // colors: background, line, polygon, label
+){
+
+  // start
+  var t_line_grow = 500;
+  var t_text_appear = 700;
+  var t_poly_grow = 700;
+
+  var num = items.length;
+  var max_val =
+    Math.max.apply(null,
+      data.map(function(d){
+        return Math.max.apply(null,d.list);
+      }));
+  max_val = Math.max(max_val,def_max);
+
+  var lines = canv.selectAll("line."+prefix).data(items).enter().append("line")
+      .attr("class",prefix);
+
+  var back = canv.selectAll("polygon."+prefix+"back").data(["back"])
+      .enter().append("polygon")
+      .attr("class",prefix+"back");
+  var polysubid = data.map(function(d){return d.name;});
+  var polygons = canv.selectAll("polygon."+prefix+"poly").data(data)
+      .enter().append("polygon")
+      .attr("class",prefix+"poly");
+
+  var labels = canv.selectAll("text."+prefix).data(items).enter().append("text")
+      .attr("class",prefix)
+      .text(function(d){return d;});
+  var names = canv.selectAll("text."+prefix+"name").data(data).enter().append("text")
+      .attr("class",prefix+"name")
+      .attr("fill",function(d){return d.clr;})
+      .attr("x",orig_cx+radius+50).attr("y",function(d,i){return orig_cy-radius*0.9+i*20;})
+      .text(function(d){return d.name;});
+  var title = canv.selectAll("text."+prefix+"title").data(["title"]).enter().append("text")
+      .attr("class",prefix+"title")
+      .attr("x",orig_cx).attr("y",orig_cy)
+      .attr("text-anchor","middle")
+      .attr("font-size",""+Math.round(radius/3.5)+"pt")
+      .attr("font-weight","bold")
+      .attr("fill",clrs.text)
+      .attr("opacity",0)
+      .text(prefix);
+
+  //initialize background polygon
+  back.attr("points",""+orig_cx+","+orig_cy).attr("opacity","0.3").attr("fill",clrs.back)
+    .attr("points",
+      function() {
+        return items.map(function(d,i) {
+          return [
+            radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
+            radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
+          ].join(",");
+        }).join(" ");
+      });
+  //extend the lines
+  lines
+    .attr("stroke",clrs.line).attr("stroke-width","2")
+    .attr("x1",orig_cx).attr("y1",orig_cy)
+    .attr("x2",orig_cx).attr("y2",orig_cy)
+    .transition().duration(t_line_grow)
+    .attr("x2",function(d,i){ return radius*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
+    .attr("y2",function(d,i){ return radius*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; });
+  //display the labels
+  labels
+    .attr("fill","white")
+    .attr("x",function(d,i){ return (20+radius)*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx; })
+    .attr("y",function(d,i){ return (20+radius)*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy; })
+    .attr("text-anchor",function(d,i){
+      if(i == 0 || i == num/2){ return "middle"; }
+      else if(i < num/2){ return "start"; }
+      else{ return "end"; }
+    })
+    .transition().delay(t_line_grow).duration(t_text_appear)
+    .attr("fill",clrs.text);
+  //extend the polygon
+  polygons.attr("points",
+      function(d) {
+        return d.list.map(function(d,i) {
+          return [
+            orig_cx,
+            orig_cy
+          ].join(",");
+        }).join(" ");
+      })
+    .attr("opacity","0.4")
+    .attr("fill",
+      function(d) {
+        return d.clr;
+      }).transition().delay(t_line_grow).duration(t_poly_grow)
+    .attr("stroke","black")
+    .attr("stroke-width","1pt")
+    .attr("points",
+      function(d) {
+        return d.list.map(function(d,i) {
+          return [
+            d*radius/max_val*Math.cos(Math.PI*2/num*i-Math.PI/2)+orig_cx,
+            d*radius/max_val*Math.sin(Math.PI*2/num*i-Math.PI/2)+orig_cy
+          ].join(",");
+        }).join(" ");
+      });
+
+  // show the names of data series
+  names.attr("opacity",0).transition().delay(t_line_grow).duration(t_text_appear)
+       .attr("opacity",1);
+
+  // show the title
+  title.transition().delay(t_line_grow).duration(t_text_appear)
+      .attr("opacity",0.45);
+}
+
+
+function v2c(val){
+  // value ranging from 0 ot 100 to "00" to "ff"
+  var str = Math.floor(val*255/100.0).toString(16);
+  if(str.length == 1) str = "0" + str;
+  return str;
+}
+
+function hsv2code(H,S,V){
+  // generates RGB string form HSV values
+  // parameters from 0 to 100 exept for H
+  S = S/100.0;
+  V = V/100.0;
+  var C = V*S;
+  var buff = H/60.0;
+  var X = C*(1-Math.abs(H/60.0 - (Math.floor(buff/2)*2) - 1));
+  var m = V - C;
+
+  var Rsub, Gsub, Bsub;
+  if(H<60){
+    Rsub = C; Gsub = X; Bsub = 0;
+  }else if(H < 120){
+    Rsub = X; Gsub = C; Bsub = 0;
+  }else if(H < 180){
+    Rsub = 0; Gsub = C; Bsub = X;
+  }else if(H < 240){
+    Rsub = 0; Gsub = X; Bsub = C;
+  }else if(H < 300){
+    Rsub = X; Gsub = 0; Bsub = C;
+  }else{
+    Rsub = C; Gsub = 0; Bsub = X;
+  }
+  return "#" + v2c((Rsub + m)*100) + v2c((Gsub + m)*100) + v2c((Bsub + m)*100);
+
+}
+
+
+function loadData(c_indx,c_intv,filepath){
+  d3.csv(filepath,
+    function(error,data){
+      if(error) throw error;
+
+      var title = Object.keys(data[0])[0];
+      var items = data.map(function(d){ return Object.values(d)[0];});
+      console.log(items);
+      var datalist = [];
+      for(i = 0; i < Object.keys(data[0]).length-1; i++){
+        var data_temp = { name : "", clr : "", list : []};
+        data_temp.name = Object.keys(data[0])[i+1];
+        data_temp.clr = hsv2code((c_indx+(i-items.length/2)*c_intv+360)%360,100,80);
+        data_temp.list = data.map(function(d){ return Object.values(d)[i+1];});
+        console.log(data_temp);
+        datalist =  datalist.concat(data_temp);
+      }
+
+      var clrs = {
+        back : hsv2code((c_indx)%360,80,45),
+        line : hsv2code((c_indx)%360,70,60),
+        text : hsv2code((c_indx)%360,70,60)
+      };
+      mkchart(canv,items,datalist,title,300,300,200,0,clrs);
+    }
+  );
+}
+
+function selectButton(indx){
+  var btn_energy = d3.select("#btn_energy").attr("class","nav-link");
+  var spn_energy = d3.select("#spn_energy").text("");
+  var btn_waste = d3.select("#btn_waste").attr("class","nav-link");
+  var spn_waste = d3.select("#spn_waste").text("");
+  var btn_food = d3.select("#btn_food").attr("class","nav-link");
+  var spn_food = d3.select("#spn_food").text("");
+  var btn_nature = d3.select("#btn_nature").attr("class","nav-link");
+  var spn_nature = d3.select("#spn_nature").text("");
+
+  if(indx=="energy"){
+    btn_energy.attr("class","nav-link active");
+    spn_energy.text("(current)");
+  }else if(indx=="waste"){
+    btn_waste.attr("class","nav-link active");
+    spn_waste.text("(current)");
+  }else if(indx=="food"){
+    btn_food.attr("class","nav-link active");
+    spn_food.text("(current)");
+  }else if(indx=="nature"){
+    btn_nature.attr("class","nav-link active");
+    spn_nature.text("(current)");
+  }else{
+    btn_energy.attr("class","nav-link active");
+    spn_energy.text("(current)");
+  }
+}
+
+// Aloha+Energy charts
+function go2energy(){
+  selectButton("energy");
+  canv.selectAll("*").remove();
+
+  var c_indx = 240;
+  var c_intv = 40;
+  var filepath  ="/data/energy.csv";
+
+  loadData(c_indx,c_intv,filepath);
+
+}
+
+function go2waste(){
+  selectButton("waste");
+  canv.selectAll("*").remove();
+
+  var c_indx = 30;
+  var c_intv = 40;
+  var filepath  ="/data/waste.csv";
+
+  loadData(c_indx,c_intv,filepath);
+}
+
+// Aloha+Food charts
+function go2food(){
+  selectButton("food");
+  canv.selectAll("*").remove();
+
+  var c_indx = 0;
+  var c_intv = 40;
+  var filepath  ="/data/food.csv";
+
+  loadData(c_indx,c_intv,filepath);
+}
+
+// Aloha+Nature charts
+function go2nature(){
+  selectButton("nature");
+  canv.selectAll("*").remove();
+
+  var c_indx = 120;
+  var c_intv = 40;
+  var filepath  ="/data/nature.csv";
+
+  loadData(c_indx,c_intv,filepath);
+}
+
+
+//============================================
+//======== START =============================
+//============================================
+
+// adjust the area to draw charts
+var canv = d3.select("#canvas");
+canv.attr("width",2000).attr("height",5000);
+
+// show the default charts
+go2energy();
+
+</script>

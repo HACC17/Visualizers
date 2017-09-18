@@ -16,7 +16,8 @@
   },
   "dependencies": {
     "express": "^4.15.4",
-    "mongodb": "^2.2.31"
+    "mongodb": "^2.2.31",
+    "handlebars": "^4.0.10"
   },
   "devDependencies": {},
   "bundleDependencies": [],

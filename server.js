@@ -217,7 +217,7 @@ application.use((mainError, request, response, next) => {
 			return;
 		}
 		
-		fs.readFile(TEMPLATE_DIRECTORY + "error" + ".template.html", "utf8", (error, data) => {
+		fs.readFile(TEMPLATE_DIRECTORY + "error.html", "utf8", (error, data) => {
 			if (error) {
 				// Couldn't read the error template
 				console.error("Application error reference ID: " + errorID);

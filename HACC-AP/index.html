@@ -192,7 +192,7 @@ function mkchart(
       });
 
   // show the names of data series
-  names.transition().delay(t_line_grow).duration(t_text_appear)
+  names.attr("opacity",0).transition().delay(t_line_grow).duration(t_text_appear)
        .attr("opacity",1);
 
   // show the title
@@ -249,7 +249,7 @@ function loadData(c_indx,c_intv,filepath){
       for(i = 0; i < Object.keys(data[0]).length-1; i++){
         var data_temp = { name : "", clr : "", list : []};
         data_temp.name = Object.keys(data[0])[i+1];
-        data_temp.clr = hsv2code((c_indx+i*c_intv)%360,100,80);
+        data_temp.clr = hsv2code((c_indx+(i-items.length/2)*c_intv+360)%360,100,80);
         data_temp.list = data.map(function(d){ return Object.values(d)[i+1];});
         console.log(data_temp);
         datalist =  datalist.concat(data_temp);

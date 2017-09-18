@@ -46,7 +46,7 @@ application.use("/api/get/:id", (request, response, next) => {
 		if (error) {
 			let httpError = new Error("500 Internal Server Error");
 			httpError.status = 500;
-			httpError._errorObject = httpError;
+			httpError._errorObject = error;
 			httpError._method = request.method;
 			httpError._originalPath = request.path;
 			
@@ -95,7 +95,7 @@ application.use((request, response, next) => {
 				if (error) {
 					let httpError = new Error("404 Not Found");
 					httpError.status = 404;
-					httpError._errorObject = httpError;
+					httpError._errorObject = error;
 					httpError._method = request.method;
 					httpError._originalPath = request.path;
 					httpError._impliedPath = path;

@@ -14,6 +14,7 @@ let application = require("express")();
 let http = require("http");
 let server = http.createServer(application);
 let fs = require("fs");
+let handlebars = require("handlebars");
 
 let ServerError = require(INCLUDE_DIRECTORY + "serverErrors");
 let template = require(INCLUDE_DIRECTORY + "template");
@@ -216,45 +217,44 @@ application.use((mainError, request, response, next) => {
 			return;
 		}
 		
-		template.parseFile(TEMPLATE_DIRECTORY + "error", {
-			errorCode: errorType.code,
-			errorName: errorType.name,
-			errorMessage: errorType.message,
-			errorInformation: () => {
-				if (typeof errorType.information == "function") {
-					return errorType.information(request.method, request.path);
+		let errorTemplate = handlebars.compile(TEMPLATE_DIRECTORY + "error" + ".template.html");
+		try {
+			let errorPage = errorTemplate({
+				errorCode: errorType.code,
+				errorName: errorType.name,
+				errorMessage: errorType.message,
+				errorInformation: () => {
+					if (typeof errorType.information == "function") {
+						return errorType.information(request.method, request.path);
+					}
+
+					return errorType.information;
+				},
+				errorHelpText: () => {
+					if (typeof errorType.helpText == "function") {
+						return errorType.helpText(errorID);
+					}
+
+					return errorType.helpText;
 				}
-				
-				return errorType.information;
-			},
-			errorHelpText: () => {
-				if (typeof errorType.helpText == "function") {
-					return errorType.helpText(errorID);
-				}
-				
-				return errorType.helpText;
-			}
-		}, (error, data) => {
-			if (error) {
-				// Couldn't read or parse the error template
-				console.error("Application error reference ID: " + errorID);
-				console.error(mainError);
-				console.error("Error getting template:");
-				console.error(error);
-				
-				// Send a plain text error
-				response.setHeader("Content-Type", "text/plain");
-				response.send(errorType.code + " " + errorType.name + "\nError Reference ID: " + errorID);
-				
-				return;
-			}
+			});
 			
 			console.error("Application error reference ID: " + errorID);
 			console.error(mainError);
 			console.error("");
 			
-			response.send(data);
-		});
+			response.send(errorPage);
+		} catch (error) {
+			// Couldn't read or parse the error template
+			console.error("Application error reference ID: " + errorID);
+			console.error(mainError);
+			console.error("Error getting template:");
+			console.error(error);
+
+			// Send a plain text error
+			response.setHeader("Content-Type", "text/plain");
+			response.send(errorType.code + " " + errorType.name + "\nError Reference ID: " + errorID);
+		}
 	});
 });
 

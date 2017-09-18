@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>{errorCode} {errorName}</title>
+		<title>{{{errorCode}}} {{{errorName}}}</title>
 		<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
 		<style type="text/css">
 			html {
@@ -39,10 +39,10 @@
 	</head>
 	<body>
 		<div class="error-box">
-			<div style="margin: 20px; font-size: 72px; color: #2196F3;">{errorMessage}</div>
-			<div style="margin-bottom: 30px; font-size: 16px; color: #64B5F6;">{errorCode} {errorName}</div>
+			<div style="margin: 20px; font-size: 72px; color: #2196F3;">{{{errorMessage}}}</div>
+			<div style="margin-bottom: 30px; font-size: 16px; color: #64B5F6;">{{{errorCode}}} {{{errorName}}}</div>
 		</div>
-		<div style="margin-top: 40px;">{errorInformation}</div>
-		<div style="margin-top: 25px;">{errorHelpText}</div>
+		<div style="margin-top: 40px;">{{{errorInformation}}}</div>
+		<div style="margin-top: 25px;">{{{errorHelpText}}}</div>
 	</body>
 </html>

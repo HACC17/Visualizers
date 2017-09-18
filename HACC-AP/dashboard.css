@@ -21,6 +21,10 @@ h1 {
 	padding: 1rem;
 }
 
+.navbar-brand::after {
+	content: "Aloha+ Dashboard";
+}
+
 /*
  * Sidebar
  */

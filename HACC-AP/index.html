@@ -181,6 +181,8 @@ function mkchart(
       function(d) {
         return d.clr;
       }).transition().delay(t_line_grow).duration(t_poly_grow)
+    .attr("stroke","black")
+    .attr("stroke-width","1pt")
     .attr("points",
       function(d) {
         return d.list.map(function(d,i) {
@@ -303,29 +305,7 @@ function go2energy(){
   var filepath  ="/data/energy.csv";
 
   loadData(c_indx,c_intv,filepath);
-/*
 
-  items = [
-    "item1","item2","item3"
-  ];
-  data1 = {
-    name : "Data1",
-    clr : "green",
-    list :  [50,20,10]
-  };
-  data2 = {
-    name : "Data2",
-    clr : "slateblue",
-    list :  [23,30,20]
-  };
-  data3 = {
-    name : "Data3",
-    clr : "darkblue",
-    list :  [5,10,50]
-  };
-  data = [data1,data2,data3];
-  mkchart(canv,items,data,"Energy2",700,300,130,0,{back:"steelblue",line:"black",text:"mediumblue"});
-*/
 }
 
 function go2waste(){
@@ -363,6 +343,10 @@ function go2nature(){
   loadData(c_indx,c_intv,filepath);
 }
 
+
+//============================================
+//======== START =============================
+//============================================
 
 // adjust the area to draw charts
 var canv = d3.select("#canvas");

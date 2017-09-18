@@ -217,44 +217,61 @@ application.use((mainError, request, response, next) => {
 			return;
 		}
 		
-		let errorTemplate = handlebars.compile(TEMPLATE_DIRECTORY + "error" + ".template.html");
-		try {
-			let errorPage = errorTemplate({
-				errorCode: errorType.code,
-				errorName: errorType.name,
-				errorMessage: errorType.message,
-				errorInformation: () => {
-					if (typeof errorType.information == "function") {
-						return errorType.information(request.method, request.path);
-					}
+		fs.readFile(TEMPLATE_DIRECTORY + "error" + ".template.html", "utf8", (error, data) => {
+			if (error) {
+				// Couldn't read the error template
+				console.error("Application error reference ID: " + errorID);
+				console.error(mainError);
+				console.error("Error reading template:");
+				console.error(error);
 
-					return errorType.information;
-				},
-				errorHelpText: () => {
-					if (typeof errorType.helpText == "function") {
-						return errorType.helpText(errorID);
-					}
-
-					return errorType.helpText;
-				}
-			});
+				// Send a plain text error
+				response.setHeader("Content-Type", "text/plain");
+				response.send(errorType.code + " " + errorType.name + "\nError Reference ID: " + errorID);
+				
+				return;
+			}
 			
-			console.error("Application error reference ID: " + errorID);
-			console.error(mainError);
-			console.error("");
+			let errorTemplate = handlebars.compile(data);
 			
-			response.send(errorPage);
-		} catch (error) {
-			// Couldn't read or parse the error template
-			console.error("Application error reference ID: " + errorID);
-			console.error(mainError);
-			console.error("Error getting template:");
-			console.error(error);
-
-			// Send a plain text error
-			response.setHeader("Content-Type", "text/plain");
-			response.send(errorType.code + " " + errorType.name + "\nError Reference ID: " + errorID);
-		}
+			try {
+				let errorPage = errorTemplate({
+					errorCode: errorType.code,
+					errorName: errorType.name,
+					errorMessage: errorType.message,
+					errorInformation: () => {
+						if (typeof errorType.information == "function") {
+							return errorType.information(request.method, request.path);
+						}
+						
+						return errorType.information;
+					},
+					errorHelpText: () => {
+						if (typeof errorType.helpText == "function") {
+							return errorType.helpText(errorID);
+						}
+						
+						return errorType.helpText;
+					}
+				});
+				
+				console.error("Application error reference ID: " + errorID);
+				console.error(mainError);
+				console.error("");
+				
+				response.send(errorPage);
+			} catch (error) {
+				// Couldn't compile the error template
+				console.error("Application error reference ID: " + errorID);
+				console.error(mainError);
+				console.error("Error compiling template:");
+				console.error(error);
+				
+				// Send a plain text error
+				response.setHeader("Content-Type", "text/plain");
+				response.send(errorType.code + " " + errorType.name + "\nError Reference ID: " + errorID);
+			}
+		});
 	});
 });
 

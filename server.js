@@ -44,8 +44,10 @@ application.use(function (request, response, next) {
 application.use("/api/get/:id", (request, response, next) => {
 	socrata.get(request.params.id, (error, data) => {
 		if (error) {
-			let httpError = new Error("500 Internal Server Error");
-			httpError.status = 500;
+			let httpError = new Error("400 Bad Request");
+			httpError.status = 400;
+			httpError._type = "API";
+			httpError._reason = "Invalid ID specified";
 			httpError._errorObject = error;
 			httpError._method = request.method;
 			httpError._originalPath = request.path;
@@ -63,9 +65,15 @@ application.use("/api/get/:id", (request, response, next) => {
 
 // Send plain-text 404
 application.use("/api/*", (request, response, next) => {
-	response.status(404);
-	response.setHeader("Content-Type", "text/plain");
-	response.send("404 Not Found");
+	let httpError = new Error("404 Bad Request");
+	httpError.status = 404;
+	httpError._type = "API";
+	httpError._reason = "Invalid API endpoint";
+
+	// Trigger the error handler chain
+	next(httpError);
+
+	return;
 });
 
 // Attempt to serve any file requested from the HACC-AP directory
@@ -168,6 +176,22 @@ application.use((request, response, next) => {
 	next(error);
 });
 
+// Handle all API errors
+application.use((error, request, response, next) => {
+	if (error._type != "API") {
+		next(error);
+		
+		return;
+	}
+	
+	response.status(error.status);
+	response.setHeader("Content-Type", "text/plain");
+	response.send(json.stringify({
+		status: error.status,
+		message: error._reason
+	}));
+});
+
 // Handle errors
 application.use((mainError, request, response, next) => {
 	// If there is a specific error object for the given error, use it. Otherwise, use 500
@@ -227,6 +251,7 @@ application.use((mainError, request, response, next) => {
 			
 			console.error("Application error reference ID: " + errorID);
 			console.error(mainError);
+			console.error("");
 			
 			response.send(data);
 		});

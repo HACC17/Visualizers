@@ -33,13 +33,13 @@
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="/index.html">Home</a>
+            <a class="nav-link" href="/">Home</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/clean-energy-transformation.html">Analytics</a>
+            <a class="nav-link" href="/analytics/clean-energy">Analytics</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/dataUpload">Upload <span class="sr-only">(current)</span></a>
+            <a class="nav-link" href="/data-upload/">Upload <span class="sr-only">(current)</span></a>
           </li>
         </ul>
         <form class="form-inline mt-2 mt-md-0">
@@ -54,25 +54,31 @@
         <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
-              <a class="nav-link active" href="/dataUpload-energy">Energy</a>
+              <a class="nav-link active" href="/data-upload/clean-energy">Energy </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/dataUpload-waste">Waste</a>
+              <a class="nav-link" href="/data-upload/waste-reduction">Waste</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/dataUpload-food">Food</a>
+              <a class="nav-link" href="/data-upload/local-food">Food <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="/dataUpload-nature">Nature <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/data-upload/resource-management">Nature</a>
             </li>
           </ul>
         </nav>
 
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
 
-          <h1>Natural Resource Management</h1>
+          <h1>Local Food</h1>
+              <div class="form-group row">
+                <label for="example-text-input" class="col-2 col-form-label"> Where have you bought groceries? </label>
+                <div class="col-10">
+                  <input class="form-control" type="text" value="" id="example-text-input">
+                </div>
+              </div>
               <fieldset class="form-group row">
-                <legend class="col-form-legend col-sm-2"> Have you planted any trees?
+                <legend class="col-form-legend col-sm-2"> Have you wasted or thrown away any foods due to expiration?
                 </legend>
                 <div class="col-sm-10">
                   <div class="form-check">
@@ -90,31 +96,7 @@
                 </div>
               </fieldset>
               <div class="form-group row">
-                <label for="example-text-input" class="col-2 col-form-label"> If so, how many trees? </label>
-                <div class="col-10">
-                  <input class="form-control" type="text" value="" id="example-text-input">
-                </div>
-              </div>
-              <fieldset class="form-group row">
-                <legend class="col-form-legend col-sm-2"> Have you caught any fishes?
-                </legend>
-                <div class="col-sm-10">
-                  <div class="form-check">
-                     <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios1" value="option1" checked>
-                      Yes
-                    </label>
-                   </div>
-                  <div class="form-check">
-                    <label class="form-check-label">
-                      <input class="form-check-input" type="radio" name="gridRadios2" id="gridRadios2" value="option2">
-                      No
-                    </label>
-                  </div>
-                </div>
-              </fieldset>
-              <div class="form-group row">
-              <label for="example-text-input" class="col-2 col-form-label">If so, how many fishes?</label>
+              <label for="example-text-input" class="col-2 col-form-label">If so, list down these foods and the quantity.</label>
                 <div class="col-10">
                   <input class="form-control" type="text" value="" id="example-text-input">
                 </div>

@@ -28,7 +28,7 @@
 					var graphData = JSON.parse(data);
 					
 					for (var i = 0; i < graphData.data.length; i++) {
-						graphData.data[i].x = new Date(graphData.data[i]["date"]);
+						graphData.data[i].x = new Date(graphData.data[i]["date"]).getTime();
 					}
 					
 					var chart = Highcharts.stockChart("graph-container", {
@@ -51,11 +51,11 @@
 								text: graphData.x_label
 							},
 							allowDecimals: false,
-							labels: {
-								formatter: function () {
-									return this.value; // clean, unformatted number for year
-								}
-							},
+//							labels: {
+//								formatter: function () {
+//									return this.value; // clean, unformatted number for year
+//								}
+//							},
 //							plotLines: [{
 //								color: 'red', // Color value
 //								dashStyle: 'longdashdot', // Style of the plot line. Default to solid

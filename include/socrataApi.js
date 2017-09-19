@@ -284,6 +284,7 @@ let projectIdMapping = {
 module.exports = {
 	get: (key, callback) => {
 			if (key in projectIdMapping) {
+				console.log(key);
 				utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key].socrataID + ".json", {protocol: "https:"}, undefined, (json) => {
 					try {
 						let object = JSON.parse(json);

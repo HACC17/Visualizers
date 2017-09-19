@@ -75,7 +75,7 @@
 						},
 						tooltip: {
 							pointFormatter: function () {
-								var date = new Date(point.x);
+								var date = new Date(this.x);
 								
 								return "Hawaii consumed <b>" + this.y.toLocaleString() + "</b><br>units of petroleum in " + date.getFullYear()
 							}

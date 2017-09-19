@@ -27,6 +27,10 @@
 				var jqXHR = $.get("/api/get/" + graphID, function (data) {
 					var graphData = JSON.parse(data);
 					
+					for (var i = 0; i < graphData.data.length; i++) {
+						graphData.data[i].x = new Date(graphData.data[i]["year_date"]).getTime();
+					}
+					
 					var chart = Highcharts.stockChart("graph-container", {
 						credits: false,
 						rangeSelector: {

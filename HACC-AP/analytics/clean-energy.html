@@ -19,6 +19,83 @@
 	
 		<script src="http://d3js.org/d3.v3.min.js"></script>
 		<script src="/resource/js/liquidFillGauge.js"></script>
+		
+		<script>
+			var graphID = "hawaii-renewable-portfolio-standards";
+			
+			$(document).on("DOMContentLoaded", function (event) {
+				var jqXHR = $.get("/api/get/" + graphID, function (data) {
+					var graphData = JSON.parse(data);
+					
+					var chart = Highcharts.stockChart("graph-container", {
+						credits: false,
+						rangeSelector: {
+						selected: 1
+						},
+						chart: {
+							type: 'areaspline',
+							zoomType: "x"
+						},
+						title: {
+							text: graphData.title
+						},
+						subtitle: {
+							text: 'Subtitle'
+						},
+						xAxis: {
+							title: {
+								text: graphData.x_label
+							},
+							allowDecimals: false,
+							labels: {
+								formatter: function () {
+									return this.value; // clean, unformatted number for year
+								}
+							},
+							plotLines: [{
+								color: 'red', // Color value
+								dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+								value: 1980, // Value of where the line will appear
+								width: 2 // Width of the line
+							}]
+						},
+						yAxis: {
+							title: {
+								text: graphData.y_label
+							},
+							labels: {
+								formatter: function () {
+									return this.value;
+								}
+							}
+						},
+						tooltip: {
+							pointFormat: 'Hawaii consumed <b>{point.y:,.0f}</b><br/>units petroleum in {point.x}'
+						},
+						plotOptions: {
+							area: {
+								pointStart: 1940,
+								marker: {
+									enabled: false,
+									symbol: 'circle',
+									radius: 2,
+									states: {
+										hover: {
+											enabled: true
+										}
+									}
+								}
+							}
+						},
+						series: [{
+							name: "",
+							data: graphData.data
+						}]
+					});
+				});
+			});
+		</script>
+		
 		<style>
 			.liquidFillGaugeText { font-family: Helvetica; font-weight: bold; }
 		</style>

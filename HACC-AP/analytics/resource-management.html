@@ -161,12 +161,12 @@
 			<svg id="fillgauge1" width="15%" height="200" onclick="gauge1.update(NewValue());"></svg>
 
 			<script language="JavaScript">
-				var gauge1 = loadLiquidFillGauge("fillgauge1", 50);
 				var config1 = liquidFillGaugeDefaultSettings();
 				config1.textVertPosition = 0.8;
 				config1.waveAnimateTime = 2000;
 				config1.waveHeight = 0.1;
 				config1.waveCount = 1;
+				var gauge1 = loadLiquidFillGauge("fillgauge1", 50, config1);
 				function NewValue(){
 					if(Math.random() > .5){
 						return Math.round(Math.random()*100);

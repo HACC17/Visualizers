@@ -63,7 +63,11 @@
 							}
 						},
 						tooltip: {
-							pointFormat: 'Hawaii consumed <b>{point.y:,.0f}</b><br/>units petroleum in {point.x}'
+							pointFormatter: function () {
+								var date = new Date(this.x);
+								
+								return "<b>" + this.y.toLocaleString() + "</b> acres of land<br>was protected by " + date.getFullYear()
+							}
 						},
 						plotOptions: {
 							area: {

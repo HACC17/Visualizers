@@ -36,7 +36,7 @@ let projectIdMapping = {
 		socrataID: "7z2x-cn4r",
 	},
 	"hawaii-kWh-month-bar": {
-		socrataID: "5rct-szfk,
+		socrataID: "5rct-szfk",
  	},
 	"1990-power-sector-comparison": {
 		socrataID: "ivi3-qrsn",

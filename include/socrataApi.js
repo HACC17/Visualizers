@@ -134,19 +134,19 @@ let projectIdMapping = {
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
 		socrataID: "8jfe-6nj7",
-		x_key: "",
-		x_label: "",
-		y_key: "",
-		y_label: "",
-		title: ""
+		x_key: "year",
+		x_label: "Year",
+		y_key: "percentage",
+		y_label: "Percent",
+		title: "Solid Waste Reduction Prior to Disposal"
 	},
-	"statewide-solid-waste-generation": {
+	"total-solid-waste-generation": {
 		socrataID: "8jfe-6nj7",
-		x_key: "",
-		x_label: "",
-		y_key: "",
-		y_label: "",
-		title: ""
+		x_key: "year",
+		x_label: "Year",
+		y_key: "total_solid_waste_generated",
+		y_label: "Tons",
+		title: "Total Solid Waste Generation"
 	},
 	"solid-waste-reduction-with-h-power": {
 		socrataID: "vbsv-8wfr",
@@ -180,13 +180,35 @@ let projectIdMapping = {
 		y_label: "",
 		title: ""
 	},
+	
+	// Missing waste graphs
+	
+	"tons-of-materials-recycled-statewide": {
+		socrataID: "8jfe-6nj7",
+		x_key: "year",
+		x_label: "Year",
+		y_key: "generation",
+		y_label: "Tons",
+		title: "Tons of Materials Recycled Statewide"
+	},
+	
+	// Missing waste graphs
+	
+	"h-power-net-sales": {
+		socrataID: "p8mh-zyfj",
+		x_key: "calendar_year",
+		x_label: "Year",
+		y_key: "h_power_net_sales_mwh",
+		y_label: "Megawatt-Hours",
+		title: "H-Power Net Sales"
+	},
 	"total-municipal-solid-waste-processed-through-h-power": {
 		socrataID: "kjed-rum2",
 		x_key: "calendar_year",
 		x_label: "Year",
 		y_key: "tons_received",
 		y_label: "Tons",
-		title: ""
+		title: "Total Municipal Solid Waste Processed Through H-Power"
 	},
 	
 	"h-power-percent-of-oahu-grid": {
@@ -195,7 +217,7 @@ let projectIdMapping = {
 		x_label: "Year",
 		y_key: "of_oahu_grid",
 		y_label: "H-Power Percentage",
-		title: ""
+		title: "Percent of Oahu's Grid Powered by H-Power"
 	},
 	
 	//Natural Resource Management
@@ -333,7 +355,6 @@ let projectIdMapping = {
 module.exports = {
 	get: (key, callback) => {
 			if (key in projectIdMapping) {
-				console.log(key);
 				utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key].socrataID + ".json", {protocol: "https:"}, undefined, (json) => {
 					try {
 						let object = JSON.parse(json);

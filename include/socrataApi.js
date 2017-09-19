@@ -4,280 +4,329 @@ let projectIdMapping = {
 	//Clean Energy Transformation
 	"hawaii-renewable-portfolio-standards": {
 		socrataID: "ppuq-iaak",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"hawaii-renewable-portfolio-standards-by-utility-county": {
 		socrataID: "kwy2-quqh",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"hawaii-renewable-energy-generation-by-utility-county": {
 		socrataID: "amu8-36ja",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"hawaii-renewable-energy-generation-by-resource-source": {
 		socrataID: "uuii-28hg",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"electricity-prices-U-S-vs-hawaii-source-EIA": {
 		socrataID: "9hb4-gidv",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	// w6ex-izbf is a duplicate, but missing one field
 	"total-petroleum-use-per-person": {
 		socrataID: "5x4d-ggyg",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
-		xKey: "year",
-		xLabel: "",
-		yKey: "total_petroleum_products_consumed",
-		yLabel: ""
+		x_key: "year",
+		x_label: "",
+		y_key: "total_petroleum_products_consumed",
+		y_label: "",
+		title: ""
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"maui-kWh-month-bar": {
 		socrataID: "br9k-chha",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"honolulu-kWh-month-bar": {
 		socrataID: "7z2x-cn4r",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"hawaii-kWh-month-bar": {
 		socrataID: "5rct-szfk",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"1990-power-sector-comparison": {
 		socrataID: "ivi3-qrsn",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"total-petroleum-use-per-person": {
 		socrataID: "dw3p-7qau",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"2014-GHG-emissions-by-sector": {
 		socrataID: "feij-bm5s",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"total-energy-use-sector-bar-plot": {
 		socrataID: "2wxa-tana",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"transportation-bar-chart-2": {
 		socrataID: "m7df-5775",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
 		socrataID: "8jfe-6nj7",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"statewide-solid-waste-generation": {
 		socrataID: "8jfe-6nj7",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"solid-waste-reduction-with-h-power": {
 		socrataID: "vbsv-8wfr",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"solid-waste-reduction-by-county": {
 		socrataID: "c8ud-ycie",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"solid-waste-generation-by-county": {
 		socrataID: "85fr-mbwi",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"statewide-waste-to-landfill": {
 		socrataID: "3sf9-jvhu",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
 	},
 	"total-municipal-solid-waste-processed-through-h-power": {
 		socrataID: "kjed-rum2",
-		xKey: "calendar_year",
-		xLabel: "Year",
-		yKey: "tons_received",
-		yLabel: "Tons"
+		x_key: "calendar_year",
+		x_label: "Year",
+		y_key: "tons_received",
+		y_label: "Tons",
+		title: ""
 	},
+	
+	"h-power-percent-of-oahu-grid": {
+		socrataID: "ady8-h976",
+		x_key: "calendar_year",
+		x_label: "Year",
+		y_key: "of_oahu_grid",
+		y_label: "H-Power Percentage",
+		title: ""
+	},
+	
 	//Natural Resource Management
 	"water-use-bar-plot": {
 		socrataID: "gm59-jic2",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"wastewater-percentage-reused": {
 		socrataID: "ru6r-2mez",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"state-watershed-initiative-funding": {
 		socrataID: "gpyn-uz24",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"brown-water-advisory-days": {
 		socrataID: "938u-kwuz",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"acres-surveyed": {
 		socrataID: "dtj4-gi9i",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"invasive-species-funding": {
 		socrataID: "rty7-dhai",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"active-managed-acres": {
 		socrataID: "eaud-nq8g",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"federally-listed-t-e-species-management": {
 		socrataID: "ayca-zpdg",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	//Local Food Prodcution and Consumption
 	"milk-line-plot": {
 		socrataID: "j9sd-ve3f",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"hogs-line-graph": {
 		socrataID: "q2a7-9r56",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"red-meat-line-plot": {
 		socrataID: "kaws-dnjk",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"aquaculture-line-graph": {
 		socrataID: "7y4i-nurw",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"eggplant-line-graph": {
 		socrataID: "ph8u-uuix",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"cabbage-line-graph": {
 		socrataID: "2kfr-8fd6",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"lettuce-line-graph": {
 		socrataID: "f8b7-8ni3",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 	"bananas-line-graph": {
 		socrataID: "djc3-cfkg",
-		xKey: "",
-		xLabel: "",
-		yKey: "",
-		yLabel: ""
+		x_key: "",
+		x_label: "",
+		y_key: "",
+		y_label: "",
+		title: ""
  	},
 };
 
@@ -290,11 +339,11 @@ module.exports = {
 						let object = JSON.parse(json);
 						
 						for (let i = 0; i < object.length; i++) {
-							object[i].x = Number(object[i][projectIdMapping[key].xKey]);
-							object[i].y = Number(object[i][projectIdMapping[key].yKey]);
+							object[i].x = Number(object[i][projectIdMapping[key].x_key]);
+							object[i].y = Number(object[i][projectIdMapping[key].y_key]);
 						}
 						
-						callback(undefined, JSON.stringify({data: object, xLabel: projectIdMapping[key].xLabel, yLabel: projectIdMapping[key].yLabel}));
+						callback(undefined, JSON.stringify({data: object, title: projectIdMapping[key].title, x_label: projectIdMapping[key].x_label, y_label: projectIdMapping[key].y_label}));
 					} catch (error) {
 						callback(error);
 					}

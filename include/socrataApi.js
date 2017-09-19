@@ -36,165 +36,165 @@ let projectIdMapping = {
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
 		xKey: "year",
-		yKey: ""
+		yKey: "total-energy-primary"
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",
 		xKey: "year",
-		yKey: ""
+		yKey: "all-counties-kWh-month"
 	},
 	"maui-kWh-month-bar": {
 		socrataID: "br9k-chha",
 		xKey: "year",
-		yKey: ""
+		yKey: "maui-kWh-month-bar"
 	},
 	"honolulu-kWh-month-bar": {
 		socrataID: "7z2x-cn4r",
 		xKey: "year",
-		yKey: ""
+		yKey: "honolulu-kWh-month-bar"
 	},
 	"hawaii-kWh-month-bar": {
 		socrataID: "5rct-szfk",
 		xKey: "year",
-		yKey: ""
+		yKey: "hawaii-kWh-month-bar"
  	},
 	"1990-power-sector-comparison": {
 		socrataID: "ivi3-qrsn",
 		xKey: "year",
-		yKey: ""
+		yKey: "1990-power-sector-comparison"
  	},
 	"total-petroleum-use-per-person": {
 		socrataID: "dw3p-7qau",
 		xKey: "year",
-		yKey: ""
+		yKey: "total-petroleum-use-per-person"
  	},
 	"2014-GHG-emissions-by-sector": {
 		socrataID: "feij-bm5s",
 		xKey: "year",
-		yKey: ""
+		yKey: "2014-GHG-emission-by-sector"
  	},
 	"total-energy-use-sector-bar-plot": {
 		socrataID: "2wxa-tana",
 		xKey: "year",
-		yKey: ""
+		yKey: "total-energy-use-sector-bar-plot"
  	},
 	"transportation-bar-chart-2": {
 		socrataID: "m7df-5775",
 		xKey: "year",
-		yKey: ""
+		yKey: "transportation-bar-chart-2"
  	},
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
 		socrataID: "8jfe-6nj7"
 		xKey: "year",
-		yKey: ""
+		yKey: "statewide-solid-waste-reduction-percent"
 	},
 	"statewide-solid-waste-generation": {
 		socrataID: "8jfe-6nj7"
 		xKey: "year",
-		yKey: ""
+		yKey: "statewide-solid-waste-generation"
 	},
 	"solid-waste-reduction-with-h-power": {
 		socrataID: "vbsv-8wfr"
 		xKey: "year",
-		yKey: ""
+		yKey: "solid-waste-reduction-with-h-power"
 	},
 	"solid-waste-reduction-by-county": {
 		socrataID: "c8ud-ycie"
 		xKey: "year",
-		yKey: ""
+		yKey: "solid-waste-reduction-by-county"
 	},
 	"solid-waste-generation-by-county": {
 		socrataID: "85fr-mbwi",
 		xKey: "year",
-		yKey: ""
+		yKey: "solid-waste-generation-by-county"
 	},
 	"statewide-waste-to-landfill": {
 		socrataID: "3sf9-jvhu",
 		xKey: "year",
-		yKey: ""
+		yKey: "statewide-waste-to-landfill"
 	},
 	//Natural Resource Management
 	"water-use-bar-plot": {
 		socrataID: "gm59-jic2",
 		xKey: "year",
-		yKey: ""
+		yKey: "water-use-bar-plot"
  	},
 	"wastewater-percentage-reused": {
 		socrataID: "ru6r-2mez",
 		xKey: "year",
-		yKey: ""
+		yKey: "wastewater-percentage-reused"
  	},
 	"state-watershed-initiative-funding": {
 		socrataID: "gpyn-uz24",
 		xKey: "year",
-		yKey: ""
+		yKey: "state-watershed-initiative-funding"
  	},
 	"brown-water-advisory-days": {
 		socrataID: "938u-kwuz",
 		xKey: "year",
-		yKey: ""
+		yKey: "brown-water-advisory-days"
  	},
 	"acres-surveyed": {
 		socrataID: "dtj4-gi9i",
 		xKey: "year",
-		yKey: ""
+		yKey: "acres-surveyed"
  	},
 	"invasive-species-funding": {
 		socrataID: "rty7-dhai",
 		xKey: "year",
-		yKey: ""
+		yKey: "invasive-species-funding"
  	},
 	"active-managed-acres": {
 		socrataID: "eaud-nq8g",
 		xKey: "year",
-		yKey: ""
+		yKey: "active-managed-acres"
  	},
 	"federally-listed-t-e-species-management": {
 		socrataID: "ayca-zpdg",
 		xKey: "year",
-		yKey: ""
+		yKey: "federally-listed-t-e-species-management"
  	},
 	//Local Food Prodcution and Consumption
 	"milk-line-plot": {
 		socrataID: "j9sd-ve3f",
 		xKey: "year",
-		yKey: ""
+		yKey: "milk-line-plot"
  	},
 	"hogs-line-graph": {
 		socrataID: "q2a7-9r56",
 		xKey: "year",
-		yKey: ""
+		yKey: "hogs-line-graph"
  	},
 	"red-meat-line-plot": {
 		socrataID: "kaws-dnjk",
 		xKey: "year",
-		yKey: ""
+		yKey: "red-meat-line-plot"
  	},
 	"aquaculture-line-graph": {
 		socrataID: "7y4i-nurw",
 		xKey: "year",
-		yKey: ""
+		yKey: "aquaculture-line-graph"
  	},
 	"eggplant-line-graph": {
 		socrataID: "ph8u-uuix",
 		xKey: "year",
-		yKey: ""
+		yKey: "eggplant-line-graph"
  	},
 	"cabbage-line-graph": {
 		socrataID: "2kfr-8fd6",
 		xKey: "year",
-		yKey: ""
+		yKey: "cabbage-line-graph"
  	},
 	"lettuce-line-graph": {
 		socrataID: "f8b7-8ni3",
 		xKey: "year",
-		yKey: ""
+		yKey: "lettuce-line-graph"
  	},
 	"bananas-line-graph": {
 		socrataID: "djc3-cfkg",
 		xKey: "year",
-		yKey: ""
+		yKey: "bananas-line-graph"
  	},
 };
 

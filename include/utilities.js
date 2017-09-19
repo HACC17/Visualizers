@@ -1,6 +1,6 @@
 let crypto = require("crypto");
-let http = require("http");
-let https = require("https");
+let http = require("follow-redirects").http;
+let https = require("follow-redirects").https;
 
 module.exports = {
 	/**

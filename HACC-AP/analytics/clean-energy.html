@@ -184,6 +184,8 @@
 				config2.waveHeight = 0.3;
 				config2.waveCount = 1;
 				var gauge2= loadLiquidFillGauge("fillgauge2", 20, config2);
+				d3.select("svg#fillgauge1").append("line")
+					.attr("x1",d3.select("svg g").attr("width")
 				<!-- var gauge3 = loadLiquidFillGauge("fillgauge3", 60.1, config2); -->
 				<!-- var config3 = liquidFillGaugeDefaultSettings(); -->
 				<!-- config3.textVertPosition = 0.8; -->

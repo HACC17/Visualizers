@@ -186,7 +186,7 @@ application.use((error, request, response, next) => {
 	
 	response.status(error.status);
 	response.setHeader("Content-Type", "text/plain");
-	response.send(json.stringify({
+	response.send(JSON.stringify({
 		status: error.status,
 		message: error._reason
 	}));

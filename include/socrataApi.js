@@ -23,20 +23,20 @@ let projectIdMapping = {
 		yKey: "hawaii-renewable-energy-generation-by-resource-source"
 	},
 	"electricity-prices-U-S-vs-hawaii-source-EIA": {
-		socrataID: "9hb4-gidv"
+		socrataID: "9hb4-gidv",
 		xKey: "year",
 		yKey: "electricity-prices-U-S-vs-hawaii-source-EIA"
 	},
 	// w6ex-izbf is a duplicate, but missing one field
 	"total-petroleum-use-per-person": {
-		socrataID: "5x4d-ggyg"
+		socrataID: "5x4d-ggyg",
 		xKey: "year",
 		yKey: "total-petroleum-use-per-person"
 	},
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
 		xKey: "year",
-		yKey: "total-energy-primary"
+		yKey: "total_petroleum_products_consumed"
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",
@@ -85,22 +85,22 @@ let projectIdMapping = {
  	},
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
-		socrataID: "8jfe-6nj7"
+		socrataID: "8jfe-6nj7",
 		xKey: "year",
 		yKey: "statewide-solid-waste-reduction-percent"
 	},
 	"statewide-solid-waste-generation": {
-		socrataID: "8jfe-6nj7"
+		socrataID: "8jfe-6nj7",
 		xKey: "year",
 		yKey: "statewide-solid-waste-generation"
 	},
 	"solid-waste-reduction-with-h-power": {
-		socrataID: "vbsv-8wfr"
+		socrataID: "vbsv-8wfr",
 		xKey: "year",
 		yKey: "solid-waste-reduction-with-h-power"
 	},
 	"solid-waste-reduction-by-county": {
-		socrataID: "c8ud-ycie"
+		socrataID: "c8ud-ycie",
 		xKey: "year",
 		yKey: "solid-waste-reduction-by-county"
 	},
@@ -206,8 +206,8 @@ module.exports = {
 						let object = JSON.parse(json);
 						
 						for (let i = 0; i < object.length; i++) {
-							object[i].x = object[i][projectIdMapping[key].xKey];
-							object[i].y = object[i][projectIdMapping[key].yKey];
+							object[i].x = Number(object[i][projectIdMapping[key].xKey]);
+							object[i].y = Number(object[i][projectIdMapping[key].yKey]);
 						}
 						
 						callback(undefined, JSON.stringify(object));

@@ -74,7 +74,11 @@
 							}
 						},
 						tooltip: {
-							pointFormat: 'Hawaii consumed <b>{point.y:,.0f}</b><br/>units of petroleum in ' + new Date('{point.x}')
+							pointFormatter: function () {
+								var date = new Date(point.x);
+								
+								return "Hawaii consumed <b>" + this.y.toLocaleString() + "</b><br>units of petroleum in " + date.getFullYear()
+							}
 						},
 						plotOptions: {
 							area: {

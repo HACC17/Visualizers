@@ -229,6 +229,14 @@ let projectIdMapping = {
 		y_label: "",
 		title: ""
  	},
+	"acres-protected-since-2012-cumulative": {
+		socrataID: "rf87-4m6m",
+		x_key: "year_date",
+		x_label: "Year",
+		y_key: "watershed_acres_fenced",
+		y_label: "Acres",
+		title: "Acres Protected Since 2012 Cumulative"
+	},
 	"state-watershed-initiative-funding": {
 		socrataID: "gpyn-uz24",
 		x_key: "",

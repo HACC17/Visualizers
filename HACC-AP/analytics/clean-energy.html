@@ -21,16 +21,20 @@
 		<script src="/resource/js/liquidFillGauge.js"></script>
 		
 		<script>
-			var graphID = "hawaii-renewable-portfolio-standards";
+			var graphID = "total-energy-primary";
 			
 			$(document).on("DOMContentLoaded", function (event) {
 				var jqXHR = $.get("/api/get/" + graphID, function (data) {
 					var graphData = JSON.parse(data);
 					
+					for (var i = 0; i < graphData.data.length; i++) {
+						graphData.data[i].x = new Date(graphData.data[i]["date"]).getTime();
+					}
+					
 					var chart = Highcharts.stockChart("graph-container", {
 						credits: false,
 						rangeSelector: {
-						selected: 1
+							selected: 8
 						},
 						chart: {
 							type: 'areaspline',
@@ -47,17 +51,17 @@
 								text: graphData.x_label
 							},
 							allowDecimals: false,
-							labels: {
-								formatter: function () {
-									return this.value; // clean, unformatted number for year
-								}
-							},
-							plotLines: [{
-								color: 'red', // Color value
-								dashStyle: 'longdashdot', // Style of the plot line. Default to solid
-								value: 1980, // Value of where the line will appear
-								width: 2 // Width of the line
-							}]
+//							labels: {
+//								formatter: function () {
+//									return this.value; // clean, unformatted number for year
+//								}
+//							},
+//							plotLines: [{
+//								color: 'red', // Color value
+//								dashStyle: 'longdashdot', // Style of the plot line. Default to solid
+//								value: 1980, // Value of where the line will appear
+//								width: 2 // Width of the line
+//							}]
 						},
 						yAxis: {
 							title: {

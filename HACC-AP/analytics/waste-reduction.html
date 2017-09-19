@@ -27,6 +27,10 @@
 				var jqXHR = $.get("/api/get/" + graphID, function (data) {
 					var graphData = JSON.parse(data);
 					
+					for (var i = 0; i < graphData.data.length; i++) {
+						graphData.data[i].x = new Date(graphData.data[i]["date_time"]).getTime();
+					}
+					
 					var chart = Highcharts.stockChart("graph-container", {
 						credits: false,
 						rangeSelector: {
@@ -51,13 +55,7 @@
 								formatter: function () {
 									return this.value; // clean, unformatted number for year
 								}
-							},
-							plotLines: [{
-								color: 'red', // Color value
-								dashStyle: 'longdashdot', // Style of the plot line. Default to solid
-								value: 1980, // Value of where the line will appear
-								width: 2 // Width of the line
-							}]
+							}
 						},
 						yAxis: {
 							title: {
@@ -65,26 +63,15 @@
 							},
 							labels: {
 								formatter: function () {
-									return this.value;
+									return (this.value * 100) + "%";
 								}
 							}
 						},
 						tooltip: {
-							pointFormat: 'Hawaii consumed <b>{point.y:,.0f}</b><br/>units petroleum in {point.x}'
-						},
-						plotOptions: {
-							area: {
-								pointStart: 1940,
-								marker: {
-									enabled: false,
-									symbol: 'circle',
-									radius: 2,
-									states: {
-										hover: {
-											enabled: true
-										}
-									}
-								}
+							pointFormatter: function () {
+								var date = new Date(this.x);
+								
+								return "Hawaii reduced solid waste by <b>" + (this.y * 100) + "%</b> " + date.getFullYear()
 							}
 						},
 						series: [{

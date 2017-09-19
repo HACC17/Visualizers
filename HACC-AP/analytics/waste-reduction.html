@@ -27,7 +27,7 @@
 				var jqXHR = $.get("/api/get/" + graphID, function (data) {
 					var graphData = JSON.parse(data);
 					
-					var chart = Highcharts.stockChart('container', {
+					var chart = Highcharts.stockChart("graph-container", {
 						credits: false,
 						rangeSelector: {
 						selected: 1

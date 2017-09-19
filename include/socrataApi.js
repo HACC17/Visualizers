@@ -346,26 +346,25 @@ let projectIdMapping = {
 
 module.exports = {
 	get: (key, callback) => {
-			if (key in projectIdMapping) {
-				utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key].socrataID + ".json", {protocol: "https:"}, undefined, (json) => {
-					try {
-						let object = JSON.parse(json);
-						
-						for (let i = 0; i < object.length; i++) {
-							object[i].x = Number(object[i][projectIdMapping[key].x_key]);
-							object[i].y = Number(object[i][projectIdMapping[key].y_key]);
-						}
-						
-						callback(undefined, JSON.stringify({data: object, title: projectIdMapping[key].title, x_label: projectIdMapping[key].x_label, y_label: projectIdMapping[key].y_label}));
-					} catch (error) {
-						callback(error);
+		if (key in projectIdMapping) {
+			utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key].socrataID + ".json", {protocol: "https:"}, undefined, (json) => {
+				try {
+					let object = JSON.parse(json);
+					
+					for (let i = 0; i < object.length; i++) {
+						object[i].x = Number(object[i][projectIdMapping[key].x_key]);
+						object[i].y = Number(object[i][projectIdMapping[key].y_key]);
 					}
-				}, (error) => {
+					
+					callback(undefined, JSON.stringify({data: object, title: projectIdMapping[key].title, x_label: projectIdMapping[key].x_label, y_label: projectIdMapping[key].y_label}));
+				} catch (error) {
 					callback(error);
-				});
-			} else {
-				callback(new Error("Invalid dataset ID"));
-			} 
+				}
+			}, (error) => {
+				callback(error);
+			});
+		} else {
+			callback(new Error("Invalid dataset ID"));
+		} 
 	}
-		//return contents of key or json files. 
 };

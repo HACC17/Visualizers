@@ -126,7 +126,7 @@ let projectIdMapping = {
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
 		socrataID: "8jfe-6nj7",
-		x_key: "year",
+		x_key: "date_time",
 		x_label: "Year",
 		y_key: "percentage",
 		y_label: "Percent",

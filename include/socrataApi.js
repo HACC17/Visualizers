@@ -5,201 +5,279 @@ let projectIdMapping = {
 	"hawaii-renewable-portfolio-standards": {
 		socrataID: "ppuq-iaak",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"hawaii-renewable-portfolio-standards-by-utility-county": {
 		socrataID: "kwy2-quqh",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"hawaii-renewable-energy-generation-by-utility-county": {
 		socrataID: "amu8-36ja",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"hawaii-renewable-energy-generation-by-resource-source": {
 		socrataID: "uuii-28hg",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"electricity-prices-U-S-vs-hawaii-source-EIA": {
 		socrataID: "9hb4-gidv",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	// w6ex-izbf is a duplicate, but missing one field
 	"total-petroleum-use-per-person": {
 		socrataID: "5x4d-ggyg",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
 		xKey: "year",
-		yKey: "total_petroleum_products_consumed"
+		xLabel: "",
+		yKey: "total_petroleum_products_consumed",
+		yLabel: ""
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"maui-kWh-month-bar": {
 		socrataID: "br9k-chha",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"honolulu-kWh-month-bar": {
 		socrataID: "7z2x-cn4r",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"hawaii-kWh-month-bar": {
 		socrataID: "5rct-szfk",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"1990-power-sector-comparison": {
 		socrataID: "ivi3-qrsn",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"total-petroleum-use-per-person": {
 		socrataID: "dw3p-7qau",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"2014-GHG-emissions-by-sector": {
 		socrataID: "feij-bm5s",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"total-energy-use-sector-bar-plot": {
 		socrataID: "2wxa-tana",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"transportation-bar-chart-2": {
 		socrataID: "m7df-5775",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
 		socrataID: "8jfe-6nj7",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"statewide-solid-waste-generation": {
 		socrataID: "8jfe-6nj7",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"solid-waste-reduction-with-h-power": {
 		socrataID: "vbsv-8wfr",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"solid-waste-reduction-by-county": {
 		socrataID: "c8ud-ycie",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"solid-waste-generation-by-county": {
 		socrataID: "85fr-mbwi",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"statewide-waste-to-landfill": {
 		socrataID: "3sf9-jvhu",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
 	},
 	"total-municipal-solid-waste-processed-through-h-power": {
 		socrataID: "kjed-rum2",
 		xKey: "calendar_year",
-		yKey: "tons_received"
+		xLabel: "Year",
+		yKey: "tons_received",
+		yLabel: "Tons"
 	},
 	//Natural Resource Management
 	"water-use-bar-plot": {
 		socrataID: "gm59-jic2",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"wastewater-percentage-reused": {
 		socrataID: "ru6r-2mez",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"state-watershed-initiative-funding": {
 		socrataID: "gpyn-uz24",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"brown-water-advisory-days": {
 		socrataID: "938u-kwuz",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"acres-surveyed": {
 		socrataID: "dtj4-gi9i",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"invasive-species-funding": {
 		socrataID: "rty7-dhai",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"active-managed-acres": {
 		socrataID: "eaud-nq8g",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"federally-listed-t-e-species-management": {
 		socrataID: "ayca-zpdg",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	//Local Food Prodcution and Consumption
 	"milk-line-plot": {
 		socrataID: "j9sd-ve3f",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"hogs-line-graph": {
 		socrataID: "q2a7-9r56",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"red-meat-line-plot": {
 		socrataID: "kaws-dnjk",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"aquaculture-line-graph": {
 		socrataID: "7y4i-nurw",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"eggplant-line-graph": {
 		socrataID: "ph8u-uuix",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"cabbage-line-graph": {
 		socrataID: "2kfr-8fd6",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"lettuce-line-graph": {
 		socrataID: "f8b7-8ni3",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 	"bananas-line-graph": {
 		socrataID: "djc3-cfkg",
 		xKey: "",
-		yKey: ""
+		xLabel: "",
+		yKey: "",
+		yLabel: ""
  	},
 };
 

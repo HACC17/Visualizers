@@ -15,10 +15,16 @@ let projectIdMapping = {
 		socrataID: "uuii-28hg",
 	},
 	"electricity-prices-U-S-vs-hawaii-source-EIA": {
-		socrataID: "9hb4-gidv",
+		socrataID: "9hb4-gidv"
 	},
+	// w6ex-izbf is a duplicate, but missing one field
 	"total-petroleum-use-per-person": {
-		socrataID: "5x4d-ggyg",
+		socrataID: "5x4d-ggyg"
+	},
+	"total-energy-primary": {
+		socrataID: "yt6g-n3gy",
+		xKey: "year",
+		yKey: "total_petroleum_products_consumed"
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",
@@ -49,16 +55,10 @@ let projectIdMapping = {
  	},
 	//Solid Waste Reduction
 	"statewide-solid-waste-reduction-percent": {
-		socrataID: "8jfe-6nj7",
-		transform: (object) => {
-			
-		}
+		socrataID: "8jfe-6nj7"
 	},
 	"statewide-solid-waste-generation": {
-		socrataID: "8jfe-6nj7",
-		transform: (object) => {
-			
-		}
+		socrataID: "8jfe-6nj7"
 	},
 	"solid-waste-reduction-with-h-power": {
 		socrataID: "vbsv-8wfr"
@@ -73,7 +73,7 @@ let projectIdMapping = {
 		socrataID: "3sf9-jvhu",
 	},
 	//Natural Resource Management
-	"water-use-bar-plot":
+	"water-use-bar-plot": {
 		socrataID: "gm59-jic2",
  	},
 	"wastewater-percentage-reused": {
@@ -122,38 +122,24 @@ let projectIdMapping = {
 	"bananas-line-graph": {
 		socrataID: "djc3-cfkg",
  	},
-	// w6ex-izbf is a duplicate, but missing one field
-	"petroleum-cost-per-person": {
-		socrataID: "5x4d-ggyg",
-		transform: (object) => {
-			object.x = object.year;
-			object.y = object["total_petroleum_products_consumed"];
-			
-			object.year = undefined;
-			object["total_petroleum_products_consumed"] = undefined;
-			
-			return object;
-		}
-	},
-	"total-energy-primary": {
-		socrataID: "yt6g-n3gy",
-		transform: (object) => {
-			object.x = object.year;
-			object.y = object["total_petroleum_products_consumed"];
-			
-			object.year = undefined;
-			object["total_petroleum_products_consumed"] = undefined;
-			
-			return object;
-		}
-	}
 };
 
 module.exports = {
 	get: (key, callback) => {
 			if (key in projectIdMapping) {
-				utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key].socrataID + ".json", {protocol: "https:"}, undefined, (data) => {
-					callback(undefined, data);
+				utilities.httpRequest("dashboard.hawaii.gov", "/resource/" + projectIdMapping[key].socrataID + ".json", {protocol: "https:"}, undefined, (json) => {
+					try {
+						let object = JSON.parse(json);
+						
+						for (let i = 0; i < object.length; i++) {
+							object[i].x = object[i][projectIdMapping[key].xKey];
+							object[i].y = object[i][projectIdMapping[key].yKey];
+						}
+						
+						callback(undefined, JSON.stringify(object));
+					} catch (error) {
+						callback(error);
+					}
 				}, (error) => {
 					callback(error);
 				});

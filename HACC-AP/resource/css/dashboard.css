@@ -67,6 +67,13 @@ h1 {
  * Dashboard
  */
 
+.graph {
+	min-width: 310px;
+	min-height: 300px;
+	height: 75vh;
+	margin: 0 auto;
+}
+
  /* Placeholders */
 .placeholders {
   padding-bottom: 3rem;

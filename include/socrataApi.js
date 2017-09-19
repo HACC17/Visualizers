@@ -36,7 +36,7 @@ let projectIdMapping = {
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
 		xKey: "year",
-		yKey: ""
+		yKey: "total_petroleum_products_consumed"
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",

@@ -33,9 +33,9 @@
 					
 					var chart = Highcharts.stockChart("graph-container", {
 						credits: false,
-						rangeSelector: {
-							selected: 8
-						},
+//						rangeSelector: {
+//							selected: 2
+//						},
 						chart: {
 							type: 'areaspline',
 							zoomType: "x"
@@ -151,9 +151,25 @@
         </nav>
 		  <div id="graph-container" class="graph"></div>
         <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
-          <h1>Dashboard</h1>
 		<h1>CLEAN ENERGY TRANSFORMATION</h1>
-		<p>Hawaii is determined to achieve its goal of 40 percent renewable energy in the electricity sector and a reduction of electricity consumption by 4,300 gigawatt-hours by 2030 as a mid-term goal on the way to100 percent renewable energy generation by 2045. Currently, only renewable energy for electricity is being tracked for this goal until Hawaii Energy Efficiency Portfolio Standards are released in 2019. Pursuing energy independence and transitioning off fossil fuels achieves a dual purpose: stimulating smart growth that benefits future generations in Hawaii and delivering cost-effective energy that is environmentally friendly.</p>
+    <br />
+    <h3>Purpose</h3>
+    <ol>
+      <li>Stimulating smart growth that benefits future generations in Hawaii</li>
+      <li>Delivering cost-effective energy that is environmentally friendly</li>
+    </ol>
+    <h3>Hawaii's Goals by 2030</h3>
+    <ul>
+      <li>40 percent renewable energy in the electricity sector</li>
+      <li>A reduction of electricity consumption by 4,300 gigawatt-hours</li>
+    </ul>
+    <h3>Hawaii's Goal by 2045</h3>
+    <ul>
+      <li>100 percent renewable energy generation</li>
+    </ul>
+    <br />
+		<p>Currently, only renewable energy for electricity is being tracked for this goal until Hawaii Energy Efficiency Portfolio Standards are released in 2019. </p> <br />
+    
 			<h3>Gas Consumption</h3>
 			<svg id="fillgauge1" width="19%" height="200" onclick="gauge1.update(NewValue());"></svg>
 			<h3 style="padding-top:30px;">Electric Usage</h3>

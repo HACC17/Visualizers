@@ -45,7 +45,7 @@ let projectIdMapping = {
 	},
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
-		x_key: "year",
+		x_key: "date",
 		x_label: "Year",
 		y_key: "total_petroleum_products_consumed",
 		y_label: "Total Petroleum Products Consumed (Barrels)",

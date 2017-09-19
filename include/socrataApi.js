@@ -4,19 +4,11 @@ let projectIdMapping = {
 	//Clean Energy Transformation
 	"hawaii-renewable-portfolio-standards": {
 		socrataID: "ppuq-iaak",
-		x_key: "",
-		x_label: "",
-		y_key: "",
-		y_label: "",
-		title: ""
-	},
-	"hawaii-renewable-portfolio-standards-by-utility-county": {
-		socrataID: "kwy2-quqh",
-		x_key: "",
-		x_label: "",
-		y_key: "",
-		y_label: "",
-		title: ""
+		x_key: "year",
+		x_label: "Year",
+		y_key: "state_total",
+		y_label: "State Total (Percentage)",
+		title: "Hawaii Renewable Portfolio Standards"
 	},
 	"hawaii-renewable-energy-generation-by-utility-county": {
 		socrataID: "amu8-36ja",
@@ -44,20 +36,20 @@ let projectIdMapping = {
 	},
 	// w6ex-izbf is a duplicate, but missing one field
 	"total-petroleum-use-per-person": {
-		socrataID: "5x4d-ggyg",
-		x_key: "",
-		x_label: "",
-		y_key: "",
-		y_label: "",
-		title: ""
+		socrataID: "w6ex-izbf",
+		x_key: "year",
+		x_labe: "Year",
+		y_key: "petroleum_spent_person",
+		y_label: "Petroleum $ Spent/Person (USD)",
+		title: "Total Petroleum Use Per Person"
 	},
 	"total-energy-primary": {
 		socrataID: "yt6g-n3gy",
 		x_key: "year",
-		x_label: "",
+		x_label: "Year",
 		y_key: "total_petroleum_products_consumed",
-		y_label: "",
-		title: ""
+		y_label: "Total Petroleum Products Consumed (Barrels)",
+		title: "Total Energy Primary"
 	},
 	"all-counties-kWh-month": {
 		socrataID: "763e-rasd",

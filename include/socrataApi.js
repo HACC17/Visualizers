@@ -294,7 +294,7 @@ module.exports = {
 							object[i].y = Number(object[i][projectIdMapping[key].yKey]);
 						}
 						
-						callback(undefined, JSON.stringify(object));
+						callback(undefined, JSON.stringify({data: object, xLabel: projectIdMapping[key].xLabel, yLabel: projectIdMapping[key].yLabel}));
 					} catch (error) {
 						callback(error);
 					}

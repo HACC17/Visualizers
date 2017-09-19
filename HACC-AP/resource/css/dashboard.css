@@ -72,6 +72,7 @@ h1 {
 	min-height: 300px;
 	height: 75vh;
 	margin: 0 auto;
+	flex: 1;
 }
 
  /* Placeholders */
